@@ -14,9 +14,11 @@ import javafx.scene.layout.VBox;
  */
 public class EnterWordScene {
     private QuizModel _quizModel;
+    private boolean _isReview;
 
     EnterWordScene() {
         _quizModel = AppModel.getQuizModel();
+        _isReview = _quizModel.getIsReview();
     }
 
     /*
@@ -25,7 +27,7 @@ public class EnterWordScene {
     private Scene build() {
 
         Label label1 = new Label("New Spelling Quiz");
-        if(_quizModel.getIsReview()) {
+        if(_isReview) {
             label1.setText("Review Quiz");
         }
 
@@ -65,7 +67,7 @@ public class EnterWordScene {
         //Layout
         HBox innerLayout = new HBox();
 
-        if (_quizModel.getIsReview()) {
+        if (_isReview) {
         /*
          * Button that causes festival to spell out the current word
          */
