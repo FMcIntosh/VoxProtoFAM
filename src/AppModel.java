@@ -3,10 +3,13 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+
+import javafx.application.Application;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 
-public class AppModel {
+public class AppModel extends Application{
 
 	private static Boolean _isFirstTime;
 	private static int _levelsUnlocked;
@@ -24,7 +27,7 @@ public class AppModel {
 	 * Reads in the 3 settings values from .settings.txt file. 
 	 * These values will persist even if the application is closed.
 	 */
-	public static void setup(){
+	private static void setup(){
 		try{
 			BufferedReader reader = new BufferedReader(new FileReader(".settings.txt"));
 			_isFirstTime = Boolean.parseBoolean(reader.readLine());
@@ -78,8 +81,13 @@ public class AppModel {
 	public static void setQuizModel(boolean isReview, int levelSelected){
 		_quizModel = new QuizModel(isReview, levelSelected);
 	}
+	//to be invoked from start() method that starts the GUI
 	public static void setWindow(Stage window){
 		_window = window;
+	}
+	public static void setScene(Scene scene){
+		_window.setScene(scene);
+		_window.show();
 	}
 	public static void setToDefault() throws FileNotFoundException{
 		_isFirstTime = true;
@@ -97,4 +105,17 @@ public class AppModel {
 		writer.close();
 	}
 
+	public static void main(String[] args){
+		setup();
+		launch(args);
+	}
+	
+	public void start(Stage primaryStage) throws Exception{
+		_window = primaryStage;
+		if(_isFirstTime){
+			WelcomeScene.setScene();
+		}else{
+			
+		}
+	}
 }
