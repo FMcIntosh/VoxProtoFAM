@@ -50,7 +50,7 @@ public class WordResultScene {
             });
         //Layout
         VBox layout4 = new VBox(10);
-        layout4.getChildren().addAll(label4, againButton);
+        layout4.getChildren().addAll(label1, actionButton);
         layout4.setAlignment(Pos.CENTER);
     }
 
