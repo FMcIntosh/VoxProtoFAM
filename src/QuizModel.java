@@ -5,7 +5,7 @@ import java.util.ArrayList;
  */
 public class QuizModel {
 
-    private int _wordsInQuiz;
+    private int _numWordsInQuiz;
     private int _levelSelected;
     private ArrayList<String> _quizWords;
     private boolean _isReview;
@@ -17,7 +17,7 @@ public class QuizModel {
         _levelSelected = levelSelected;
         _curruntWordIndex = 0;
        _quizWords = generateQuizWords();
-        _wordsInQuiz = _quizWords.size();
+        _numWordsInQuiz = _quizWords.size();
         _quizState = QuizState.STARTED;
     }
 
@@ -41,8 +41,8 @@ public class QuizModel {
 
     // Getters -----------------------------------------------------------------------------------------
 
-    public int getWordsInQuiz() {
-        return _wordsInQuiz;
+    public int getNumWordsInQuiz() {
+        return _numWordsInQuiz;
     }
 
     public int getLevelSelected() {
