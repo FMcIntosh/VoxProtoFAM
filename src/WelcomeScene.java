@@ -1,6 +1,5 @@
 import java.io.FileNotFoundException;
 
-import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -9,24 +8,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
-public class WelcomeScene extends Application{
-	private int _selectedLevel;
-	
-	//main method just here to test class individually
-	public static void main(String[] args){
-		AppModel.setup();
-		launch(args); //goes into Application and sets everything up, then invokes start()
-	}
+public class WelcomeScene{
+	private static int _selectedLevel;
 
-	public void start(Stage primaryStage) throws Exception {
-		AppModel.setWindow(primaryStage);
+	private static Scene build() throws Exception {
 		AppModel.getWindow().setTitle("Welcome");
 
+		//Create scene labels
 		Label welcomeLbl = new Label("Welcome to VoxSpell");
 		Label selectLbl = new Label("To get started, please select your desired starting level");
-		Button selectBtn = new Button("Select");
 
 		//create drop down box containing all available levels
 		final ComboBox<String> comboBox = new ComboBox<String>();
@@ -34,8 +25,11 @@ public class WelcomeScene extends Application{
 			comboBox.getItems().add("Level "+i);
 		}
 
-		//modifiable to fit the window appropriately
+		//Is modifiable to fit the window appropriately
 		comboBox.setVisibleRowCount(4);
+
+		//Create button to select the level
+		Button selectBtn = new Button("Select");
 
 		//when selectbutton is clicked, read selected value from drop down box
 		selectBtn.setOnAction(new EventHandler<ActionEvent>(){
@@ -52,23 +46,28 @@ public class WelcomeScene extends Application{
 				}
 			}
 		});
-
-
+		
+		//Set vertical layout with all components aligned to center
 		VBox layout1 = new VBox(20);
 		layout1.setAlignment(Pos.CENTER);
 		layout1.getChildren().addAll(welcomeLbl, selectLbl, comboBox, selectBtn);
 
-		Scene scene1 = new Scene(layout1,AppModel.getWidth(),AppModel.getHeight());
-
-		AppModel.getWindow().setScene(scene1);
-
-		AppModel.getWindow().show();
+		return(new Scene(layout1,AppModel.getWidth(),AppModel.getHeight()));
+	}
+	
+	public static void setScene() throws Exception{
+		Scene welcomeScene = build();
+		AppModel.setScene(welcomeScene);
 	}
 
-	private void setLevelNo(String levelString) throws FileNotFoundException{
+	//Helper method to obtain int value corresponding to level
+	private static void setLevelNo(String levelString) throws FileNotFoundException{
 		String str = levelString.replaceAll("\\D+","");
-		System.out.println(str);
 		_selectedLevel = Integer.parseInt(str);
+		
+		//Update AppModel with new level-unlocked value
 		AppModel.setLevelsUnlocked(_selectedLevel);
 	}
+
+
 }
