@@ -10,6 +10,7 @@ public class QuizModel {
     private ArrayList<String> _quizWords;
     private boolean _isReview;
     private int _curruntWordIndex;
+    private QuizState _quizState;
 
     QuizModel(boolean isReview, int levelSelected) {
         _isReview = isReview;
@@ -17,11 +18,11 @@ public class QuizModel {
         _curruntWordIndex = 0;
        _quizWords = generateQuizWords();
         _wordsInQuiz = _quizWords.size();
-
+        _quizState = QuizState.STARTED;
     }
 
     /*
-     * Helper method for constructor that generates the words for a quiz, utilisting FileModels
+     * Helper method for constructor that generates the words for a quiz, utilisting FileModel's
      * methods for getting words.
      */
     private ArrayList<String> generateQuizWords() {
@@ -60,11 +61,28 @@ public class QuizModel {
         return _curruntWordIndex;
     }
 
-    public void setCurruntWordIndex(int curruntWordIndex) {
-        _curruntWordIndex = curruntWordIndex;
+   public QuizState getQuizState() {
+        return _quizState;
     }
-    
+
     // End of getters ------------------------------------------------------------------------------------------
 
-
+    public void updateState(boolean isCorrectAnswer) {
+        switch(_quizState) {
+            case STARTED:
+                if(isCorrectAnswer) {
+                    _quizState = QuizState.MASTERED;
+                } else {
+                    _quizState = QuizState.INCORRECT;
+                }
+                break;
+            case INCORRECT:
+                if(isCorrectAnswer) {
+                    _quizState = QuizState.FAULTED;
+                } else {
+                    _quizState = QuizState.FAILED;
+                }
+                break;
+        }
+    }
 }
