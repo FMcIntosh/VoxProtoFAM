@@ -1,12 +1,10 @@
-
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-public class ApplicationModel {
+public class AppModel {
 
 	private static Boolean _isFirstTime;
 	private static int _levelsUnlocked;
@@ -14,7 +12,7 @@ public class ApplicationModel {
 	
 	private static QuizModel _quizModel;
 
-	public ApplicationModel(){
+	public AppModel(){
 		setup();
 	}
 
