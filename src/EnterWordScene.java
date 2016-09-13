@@ -1,3 +1,4 @@
+import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -48,7 +49,9 @@ public class EnterWordScene {
             @Override
             public void handle(ActionEvent event) {
                 //TODO
-               //Check Answer;
+               // Check Answer;
+                // Update model state
+                // Build appropriate scene depending on model state
             }
         });
 
@@ -98,5 +101,14 @@ public class EnterWordScene {
         // create new scene using outerLayour
         return new Scene(outerLayout, AppModel.getAppWidth(), AppModel.getAppHeight());
     }
+
+    public void setScene() {
+        //Build scene
+        Scene EnterWordScene = build();
+
+        //Set scene in AppModel
+        AppModel.setScene(EnterWordScene);
+    }
+
 
 }
