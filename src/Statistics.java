@@ -21,7 +21,12 @@ import java.util.Comparator;
  * Created by Fraser McIntosh on 20/08/2016.
  */
 public class Statistics {
-
+	
+	private int _level;
+	
+	public Statistics(int level){
+		_level = level;
+	}
     /*
      * Creates a list of word statistics using all the words in the attempted list
      * So doesn't create a statistic for a word that hasn't been attempted
@@ -29,12 +34,14 @@ public class Statistics {
     public ObservableList<WordStatistic> getWordStatistics() {
         ObservableList<WordStatistic> statistics = FXCollections.observableArrayList();
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(FileLogic.attemptedlist));
+            BufferedReader reader = new BufferedReader(new FileReader(FileModel.attemptedlist));
             String currentLine;
+            
+            //should read from file only the words between specified level and the next level
             while((currentLine = reader.readLine()) != null) {
                 // trim newline when comparing with lineToRemove
                 String trimmedLine = currentLine.trim();
-                statistics.add(new WordStatistic(trimmedLine));
+                statistics.add(new WordStatistic(trimmedLine, _level));
             }
             reader.close();
         } catch (IOException e) {
@@ -60,7 +67,8 @@ public class Statistics {
         return statistics;
     }
 
-    public Scene constructScene() {
+    @SuppressWarnings("unchecked")
+	public ScrollPane constructTableLayout() {
         TableColumn<WordStatistic, String> wordColumn = new TableColumn<>("Word");
         wordColumn.setMinWidth(200);
         wordColumn.setCellValueFactory(new PropertyValueFactory<WordStatistic, String>("word"));
@@ -81,24 +89,18 @@ public class Statistics {
         table.setItems(getWordStatistics());
         table.getColumns().addAll(wordColumn, faultedColumn, failedColumn, masteredColumn);
 
-        Button menuButton = new Button("Menu");
-        menuButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                Main.setMenu();
-            }
-        });
+       
         VBox root = new VBox();
 
-        root.getChildren().addAll(table, menuButton);
+        root.getChildren().addAll(table);
         root.setAlignment(Pos.CENTER);
 
         ScrollPane scrollpane = new ScrollPane();
         scrollpane.setFitToWidth(true);
         scrollpane.setFitToHeight(true);
-        scrollpane.setPrefSize(Main.applicationWidth, Main.applicationHeight);
+       // scrollpane.setPrefSize(Main.applicationWidth, Main.applicationHeight);
         scrollpane.setContent(root);
-        return new Scene(scrollpane);
+        return scrollpane;
     }
 
 

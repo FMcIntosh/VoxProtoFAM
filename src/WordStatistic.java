@@ -13,11 +13,11 @@ public class WordStatistic {
     /*
      * Pass in the word to the constructor and sets the fields
      */
-    WordStatistic(String word) {
+    WordStatistic(String word, int level) {
         this.word = new SimpleStringProperty(word);
-        faulted = new SimpleIntegerProperty(FileLogic.countOccurences(FileLogic.faulted_stats, word));
-        failed = new SimpleIntegerProperty(FileLogic.countOccurences(FileLogic.failed_stats, word));
-        mastered = new SimpleIntegerProperty(FileLogic.countOccurences(FileLogic.mastered_stats, word));
+        faulted = new SimpleIntegerProperty(FileModel.countOccurences(FileModel.faulted_stats, word, level));
+        failed = new SimpleIntegerProperty(FileModel.countOccurences(FileModel.failed_stats, word, level));
+        mastered = new SimpleIntegerProperty(FileModel.countOccurences(FileModel.mastered_stats, word, level));
     }
 
     public String getWord() {
