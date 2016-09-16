@@ -56,8 +56,9 @@ public class FileModel {
 
                     // construct levels between each $Level, relying on indexing to store lists in right location
                     ArrayList<String> level = new ArrayList<>();
-                    while (currentLine.charAt(0) != '%') {
+                    while (currentLine != null && currentLine.charAt(0) != '%') {
                         level.add(currentLine);
+                        currentLine = in.readLine();
                     }
                     // add levels to construct file
                     fileWords.add(level);
