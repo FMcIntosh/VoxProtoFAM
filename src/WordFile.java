@@ -8,7 +8,7 @@ public enum WordFile {
     FAILED(".failed_stats.txt"),
     MASTERED(".mastered_stats.txt"),
     REVIEW(".reviewlist.txt"),
-    ATTEMPTED(".faultedlist.txt");
+    ATTEMPTED(".attempted.txt");
 
     String _filename;
     private WordFile(String filename) {
