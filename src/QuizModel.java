@@ -22,7 +22,6 @@ public class QuizModel {
        _quizWords = generateQuizWords();
         _numWordsInQuiz = _quizWords.size();
         _numCorrectWords = 0;
-        _quizState = QuizState.STARTED;
         _wordState = WordState.STARTED;
         _quizFinished = (_numWordsInQuiz== _curruntWordIndex);
     }
@@ -104,6 +103,11 @@ public class QuizModel {
         }
     }
 
+    public void updateQuizState() {
+        _curruntWordIndex++;
+        _quizFinished = (_numWordsInQuiz == _curruntWordIndex);
+    }
+
     // Answer submission logic ---------------------------------------------------------------------------------
 
     public boolean submitAnswer (String answer) {
@@ -125,12 +129,6 @@ public class QuizModel {
      */
     private boolean checkAnswer(String word) {
         return (word == getCurrentWord());
-    }
-
-
-    private void updateQuiz() {
-        _curruntWordIndex++;
-        _quizFinished = (_numWordsInQuiz== _curruntWordIndex);
     }
 
 }
