@@ -1,12 +1,13 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by Fraser McIntosh on 16/09/2016.
  */
 public class FileModel {
 
-
+   static HashMap<WordFile, ArrayList<ArrayList<String>>> _fileMap = new HashMap<>();
 
     public static void initialise() {
         createFiles();
@@ -24,6 +25,45 @@ public class FileModel {
                     e.printStackTrace();
                 }
             }
+        }
+    }
+
+    /*
+     * Helper method that parses the files and converts them into a more easily
+     * read format. Need to parse everytime application is started
+     * Coupled to format of text file
+     */
+    private static void parseFiles() {
+
+        //Loop through every file
+        for (WordFile filename : WordFile.values()) {
+            File file = new File(filename + "");
+            BufferedReader in = null;
+            // file de-constructed into lists of levels
+            ArrayList<ArrayList<String>> fileWords = new ArrayList<>();
+            try {
+                in = new BufferedReader(new FileReader(file + ""));
+
+                String currentLine = in.readLine();
+
+                // loop through till end of file
+                while (currentLine != null) {
+                    currentLine = in.readLine();
+
+                    // construct levels between each $Level, relying on indexing to store lists in right location
+                    ArrayList<String> level = new ArrayList<>();
+                    while (currentLine.charAt(0) != '%') {
+                        level.add(currentLine);
+                    }
+                    // add levels to construct file
+                    fileWords.add(level);
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            // put all files into a map
+            _fileMap.put(filename, fileWords);
         }
     }
 
@@ -52,7 +92,7 @@ public class FileModel {
     /*
      * Helper method that returns all words from a level in a file selected
      */
-    public static ArrayList<String> wordsFromLevel(WordFile file, int level) {
+    public static ArrayList<String> getwordsFromLevel(WordFile file, int level) {
         BufferedReader in = null;
         ArrayList<String> words =  new ArrayList<>();
         try {
