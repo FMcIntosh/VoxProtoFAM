@@ -12,19 +12,20 @@ import javafx.scene.layout.VBox;
 public class WordResultScene {
     private QuizModel _quizModel;
     private boolean _isReview;
-    private boolean _answerWasCorrect;
+    private WordState _currentWordState;
 
     WordResultScene() {
         _quizModel = AppModel.getQuizModel();
         _isReview = _quizModel.getIsReview();
-        _answerWasCorrect = QuizModel.getIsAnswerCorrect();
+        _currentWordState = _quizModel.getWordState();
     }
 
+    // Only get to this scene if quiz still going, so don't need to check that (or do we??)
     private Scene build() {
 
         //Label informing the user if the answered correctly or not
         Label label1 = new Label();
-        if(_answerWasCorrect) {
+        if(_currentWordState.equals(WordState.MASTERED) || _currentWordState.equals(WordState.FAULTED)) {
             label1.setText("Correct");
         } else {
             label1.setText("Incorrect");
@@ -33,10 +34,10 @@ public class WordResultScene {
         // Button that either says "Next Word", or "Try Again", depending
         // on whether the previous answer was correct or not
         Button actionButton = new Button();
-        if(_answerWasCorrect) {
-            actionButton.setText("Next Word");
-        } else {
+        if(_currentWordState.equals(WordState.INCORRECT)) {
             actionButton.setText("Try Again");
+        } else {
+            actionButton.setText("Next Word");
         }
 
         /*
@@ -45,13 +46,15 @@ public class WordResultScene {
         actionButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    EnterWordScene.setScene();
+                    new EnterWordScene().setScene();
                 }
             });
         //Layout
         VBox layout4 = new VBox(10);
         layout4.getChildren().addAll(label1, actionButton);
         layout4.setAlignment(Pos.CENTER);
+
+        return new Scene(layout4);
     }
 
     public void setScene() {
