@@ -12,7 +12,6 @@ public class QuizModel {
     private boolean _isReview;
     private int _curruntWordIndex;
     private QuizState _quizState;
-    private boolean _quizFinished;
     private WordModel _wordModel;
 
 
@@ -24,7 +23,6 @@ public class QuizModel {
         _numWordsInQuiz = _quizWords.size();
         _numCorrectWords = 0;
         _wordModel = new WordModel();
-        _quizFinished = (_numWordsInQuiz == _curruntWordIndex);
         if (_numCorrectWords > 0) {
             _quizState = QuizState.READY;
         } else _quizState = QuizState.NO_WORDS;
@@ -37,9 +35,13 @@ public class QuizModel {
     private ArrayList<String> generateQuizWords() {
         ArrayList<String> quizWords = new ArrayList<>();
         for(int i = 0; i < 10; i++) {
-            // Get uniqueWords returns null if there are no more unique words
-
-            String word = FileModel.getWord(_isReview, _levelSelected);
+            // Decide what file to take from
+            WordFile file = WordFile.SPELLING_LIST;
+            if(_isReview) {
+                file = WordFile.REVIEW;
+            }
+            // Take a random word
+            String word = FileModel.randWordFromLevel(file, _levelSelected);
             if(word == null) {
                 break;
             } else {
@@ -63,6 +65,10 @@ public class QuizModel {
         return _quizWords;
     }
 
+    public WordState getWordState() {
+        return _wordModel.getWordState();
+    }
+
     public boolean getIsReview() {
         return _isReview;
     }
@@ -81,14 +87,14 @@ public class QuizModel {
         return _quizWords.get(_curruntWordIndex);
     }
 
-    public boolean getQuizFinished() {
-        return _quizFinished;
-    }
 
     // End of getters ------------------------------------------------------------------------------------------
 
 
 
+    /*
+     * Update the current state of the quiz, including the state of the word
+     */
     public void updateQuizState() {
         // If the word is failed or mastered, it is finished so need to go to the next word
         if(_wordModel.getWordState() == WordState.FAILED || _wordModel.getWordState() == WordState.MASTERED) {
