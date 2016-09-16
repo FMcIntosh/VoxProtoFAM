@@ -13,6 +13,8 @@ public class QuizModel {
     private int _curruntWordIndex;
     private QuizState _quizState;
     private boolean _quizFinished;
+    private WordModel _wordModel;
+
 
     QuizModel(boolean isReview, int levelSelected) {
         _isReview = isReview;
@@ -21,9 +23,10 @@ public class QuizModel {
         _quizWords = generateQuizWords();
         _numWordsInQuiz = _quizWords.size();
         _numCorrectWords = 0;
+        _wordModel = new WordModel();
         _quizFinished = (_numWordsInQuiz == _curruntWordIndex);
         if (_numCorrectWords > 0) {
-            _quizState = QuizState.STARTED;
+            _quizState = QuizState.READY;
         } else _quizState = QuizState.NO_WORDS;
     }
 
@@ -35,7 +38,8 @@ public class QuizModel {
         ArrayList<String> quizWords = new ArrayList<>();
         for(int i = 0; i < 10; i++) {
             // Get uniqueWords returns null if there are no more unique words
-            String word = FileModel.getUniqueWord(_isReview, quizWords, _levelSelected);
+
+            String word = FileModel.getWord(_isReview, _levelSelected);
             if(word == null) {
                 break;
             } else {
@@ -86,8 +90,15 @@ public class QuizModel {
 
 
     public void updateQuizState() {
-        _curruntWordIndex++;
-        _quizFinished = (_numWordsInQuiz == _curruntWordIndex);
+        // If the word is failed or mastered, it is finished so need to go to the next word
+        if(_wordModel.getWordState() == WordState.FAILED || _wordModel.getWordState() == WordState.MASTERED) {
+            _curruntWordIndex++;
+            _wordModel = new WordModel();
+        }
+        // If we have gone through all words in the quiz, the quiz is finished
+        if(_numWordsInQuiz == _curruntWordIndex){
+            _quizState = QuizState.FINISHED;
+        }
     }
 
     // Answer submission logic ---------------------------------------------------------------------------------
@@ -98,19 +109,11 @@ public class QuizModel {
             return false;
         } else {
             //update model state by passing through the answer result (true/false)
-            updateWordState(checkAnswer(answer));
+            _wordModel.updateWordState(answer == getCurrentWord());
             updateQuizState();
         }
 
         // Return a true response to the view if successful submission
         return true;
     }
-
-    /*
-     * Simple helper method that
-     */
-    private boolean checkAnswer(String word) {
-        return (word == getCurrentWord());
-    }
-
 }
