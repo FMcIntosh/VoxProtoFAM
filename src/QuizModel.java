@@ -12,18 +12,19 @@ public class QuizModel {
     private boolean _isReview;
     private int _curruntWordIndex;
     private QuizState _quizState;
-    private WordState _wordState;
     private boolean _quizFinished;
 
     QuizModel(boolean isReview, int levelSelected) {
         _isReview = isReview;
         _levelSelected = levelSelected;
         _curruntWordIndex = 0;
-       _quizWords = generateQuizWords();
+        _quizWords = generateQuizWords();
         _numWordsInQuiz = _quizWords.size();
         _numCorrectWords = 0;
-        _wordState = WordState.STARTED;
-        _quizFinished = (_numWordsInQuiz== _curruntWordIndex);
+        _quizFinished = (_numWordsInQuiz == _curruntWordIndex);
+        if (_numCorrectWords > 0) {
+            _quizState = QuizState.STARTED;
+        } else _quizState = QuizState.NO_WORDS;
     }
 
     /*
@@ -70,9 +71,7 @@ public class QuizModel {
         return _quizState;
     }
 
-    public WordState getWordState(){
-        return _wordState;
-    }
+
 
     public String getCurrentWord() {
         return _quizWords.get(_curruntWordIndex);
@@ -84,24 +83,7 @@ public class QuizModel {
 
     // End of getters ------------------------------------------------------------------------------------------
 
-    public void updateWordState(boolean isCorrectAnswer) {
-        switch(_wordState) {
-            case STARTED:
-                if(isCorrectAnswer) {
-                    _wordState = WordState.MASTERED;
-                } else {
-                    _wordState = WordState.INCORRECT;
-                }
-                break;
-            case INCORRECT:
-                if(isCorrectAnswer) {
-                    _wordState = WordState.FAULTED;
-                } else {
-                    _wordState = WordState.FAILED;
-                }
-                break;
-        }
-    }
+
 
     public void updateQuizState() {
         _curruntWordIndex++;
