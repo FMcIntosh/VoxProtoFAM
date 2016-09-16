@@ -10,6 +10,7 @@ public class FileModel {
 
     public static void initialise() {
         createFiles();
+        parseFiles();
     }
 
     // Helper method to create files that don't already exist
@@ -47,8 +48,36 @@ public class FileModel {
         }
     }
 
-    private ArrayList<String> getWordsFromLevel() {
 
+    /*
+     * Helper method that returns all words from a level in a file selected
+     */
+    public static ArrayList<String> wordsFromLevel(WordFile file, int level) {
+        BufferedReader in = null;
+        ArrayList<String> words =  new ArrayList<>();
+        try {
+            in = new BufferedReader(new FileReader(file + ""));
+
+            String currentLine = in.readLine();
+            String toFind = "%Level " + level;
+            /*
+             * Find level indicator in file
+             */
+            while (currentLine != toFind && currentLine != null) {
+                currentLine = in.readLine();
+            }
+
+            toFind = "%Level " + (level + 1);
+            while (currentLine != toFind && currentLine != null) {
+                words.add(currentLine);
+                currentLine = in.readLine();
+            }
+            // add all words after this
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return words;
     }
 
     public static void addUniqueWord(WordFile file, String word) {
