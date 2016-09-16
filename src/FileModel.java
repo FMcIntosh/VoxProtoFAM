@@ -1,6 +1,7 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 /**
  * Created by Fraser McIntosh on 16/09/2016.
@@ -9,6 +10,9 @@ public class FileModel {
 
     static HashMap<WordFile, ArrayList<ArrayList<String>>> _fileMap = new HashMap<>();
 
+    static private ArrayList<String> getLevelWords(WordFile file, int level) {
+        return _fileMap.get(file).get(level);
+    }
     public static void initialise() {
         createFiles();
         parseFiles();
@@ -124,80 +128,45 @@ public class FileModel {
     }
 
 
-    public static void addUniqueWord(WordFile file, String word) {
-        if (!containsWord(file, word)) {
-            addWord(file, word);
+    public static void addUniqueWordToLevel(WordFile file, String word, int level) {
+        if (!containsWordInLevel(file, word, level)) {
+            addWordToLevel(file, word, level);
         }
     }
 
-    public static void addWord(WordFile file, String word) {
-        PrintWriter output;
-        try {
-            output = new PrintWriter(new FileWriter(file + "", true));
-            output.println(word);
-            output.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public static void addWordToLevel(WordFile file, String word, int level) {
+        getLevelWords(file, level).add(word);
     }
 
 
-    public static boolean containsWord(WordFile file, String word) {
-        BufferedReader in = null;
-        try {
-            in = new BufferedReader(new FileReader(file + ""));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            String currentWord = in.readLine();
-            while (currentWord != null) {
-                if (word.equals(currentWord)) {
-                    return true;
-                }
-                currentWord = in.readLine();
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return false;
+    /*
+     * Returns a random word from a level in a given file
+     */
+    public static String randWordFromLevel(WordFile file, int level) {
+        ArrayList<String> levelWords = getLevelWords(file, level);
+        int index =  new Random().nextInt((levelWords.size())) + 1;
+        return levelWords.get(index);
+    }
+    /*
+     * returns whether a word is in a level
+     */
+    public static boolean containsWordInLevel(WordFile file, String word, int level) {
+        return getLevelWords(file, level).contains(word);
     }
 
-    public static boolean removeWord(WordFile file, String word) {
-        // I got this method from http://stackoverflow.com/questions/1377279/find-a-line-in-a-file-and-remove-it
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(new File(file + "")));
-            ArrayList<String> lines = new ArrayList<>();
 
-            String lineToRemove = word;
-            String currentLine;
-
-            while ((currentLine = reader.readLine()) != null) {
-                // trim newline when comparing with lineToRemove
-                String trimmedLine = currentLine.trim();
-                if (trimmedLine.equals(lineToRemove)) continue;
-                lines.add(currentLine);
-            }
-            PrintWriter output = new PrintWriter(new FileWriter(file + ""));
-            for (String s : lines) {
-                output.println(s);
-            }
-            reader.close();
-            output.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return true;
+    /*
+     * Removes word from list // need to make sure it keeps files in sync
+     */
+    public static void removeWordFromLevel(WordFile file, String word, int level) {
+        getLevelWords(file, level).remove(word);
     }
 
     /*
      * returns how many matches for a word there are in a level of a file
      */
     public static int countOccurencesInLevel(WordFile file, String word, int level) {
-        ArrayList<String> levelWords = _fileMap.get(file).get(level - 1);
+        ArrayList<String> levelWords = getLevelWords(file, level);
         int count = 0;
         for (String s : levelWords) {
             if (s.equals(word)) {
