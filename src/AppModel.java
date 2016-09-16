@@ -115,7 +115,7 @@ public class AppModel extends Application{
 		if(_isFirstTime){
 			WelcomeScene.setScene();
 		}else{
-			
+			MainMenuScene.setScene();
 		}
 	}
 }

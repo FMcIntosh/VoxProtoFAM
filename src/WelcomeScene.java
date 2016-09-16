@@ -10,7 +10,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 public class WelcomeScene{
-	private static int _selectedLevel;
 
 	private static Scene build() throws Exception {
 		AppModel.getWindow().setTitle("Welcome");
@@ -40,10 +39,12 @@ public class WelcomeScene{
 				}else{
 					try {
 						setLevelNo(comboBox.getValue());
+						AppModel.setNotFirstTime();
 					} catch (FileNotFoundException e) {
 						e.printStackTrace();
 					}
 				}
+			LevelUnlockScene.setScene();
 			}
 		});
 		
@@ -63,10 +64,10 @@ public class WelcomeScene{
 	//Helper method to obtain int value corresponding to level
 	private static void setLevelNo(String levelString) throws FileNotFoundException{
 		String str = levelString.replaceAll("\\D+","");
-		_selectedLevel = Integer.parseInt(str);
+		int selectedLevel = Integer.parseInt(str);
 		
 		//Update AppModel with new level-unlocked value
-		AppModel.setLevelsUnlocked(_selectedLevel);
+		AppModel.setLevelsUnlocked(selectedLevel);
 	}
 
 
