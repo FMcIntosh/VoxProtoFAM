@@ -16,6 +16,7 @@ public class Festival {
 	
 	//Says aloud the given word 
 	public static void spellWord(String word) throws IOException, InterruptedException{
+		word = word.replaceAll(".(?!$)", "$0 ");
 		runProcess(createTempScript(word));
 	}
 	
