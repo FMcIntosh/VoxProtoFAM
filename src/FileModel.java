@@ -7,7 +7,7 @@ import java.util.HashMap;
  */
 public class FileModel {
 
-   static HashMap<WordFile, ArrayList<ArrayList<String>>> _fileMap = new HashMap<>();
+    static HashMap<WordFile, ArrayList<ArrayList<String>>> _fileMap = new HashMap<>();
 
     public static void initialise() {
         createFiles();
@@ -89,12 +89,15 @@ public class FileModel {
     }
 
 
+    public static void getWordsFromLevel(WordFile file, int level) {
+    }
+
     /*
      * Helper method that returns all words from a level in a file selected
      */
-    public static ArrayList<String> getwordsFromLevel(WordFile file, int level) {
+    private static ArrayList<String> wordsFromLevel(WordFile file, int level) {
         BufferedReader in = null;
-        ArrayList<String> words =  new ArrayList<>();
+        ArrayList<String> words = new ArrayList<>();
         try {
             in = new BufferedReader(new FileReader(file + ""));
 
@@ -119,6 +122,7 @@ public class FileModel {
         }
         return words;
     }
+
 
     public static void addUniqueWord(WordFile file, String word) {
         if (!containsWord(file, word)) {
@@ -189,26 +193,18 @@ public class FileModel {
         return true;
     }
 
-    public static int countOccurences(WordFile file, String word) {
-        BufferedReader in = null;
-        try {
-            in = new BufferedReader(new FileReader(file + ""));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+    /*
+     * returns how many matches for a word there are in a level of a file
+     */
+    public static int countOccurencesInLevel(WordFile file, String word, int level) {
+        ArrayList<String> levelWords = _fileMap.get(file).get(level - 1);
         int count = 0;
-        try {
-            String currentWord = in.readLine();
-            while (currentWord != null) {
-                if (word.equals(currentWord)) {
-                    count++;
-                }
-                currentWord = in.readLine();
+        for (String s : levelWords) {
+            if (s.equals(word)) {
+                count++;
             }
-
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+
         return count;
     }
 }
