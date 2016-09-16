@@ -18,6 +18,14 @@ public class MainMenuScene {
 		Button reviewBtn = new Button("Review");
 		
 		Button statsBtn = new Button("Statistics");
+		statsBtn.setOnAction(new EventHandler<ActionEvent>(){
+
+			@Override
+			public void handle(ActionEvent event) {
+				StatisticsScene.setScene();
+			}
+			
+		});
 		
 		Button settingsBtn = new Button("Settings");
 		settingsBtn.setOnAction(new EventHandler<ActionEvent>(){
