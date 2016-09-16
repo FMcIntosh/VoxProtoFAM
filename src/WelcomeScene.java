@@ -39,6 +39,7 @@ public class WelcomeScene{
 				}else{
 					try {
 						setLevelNo(comboBox.getValue());
+						AppModel.setNotFirstTime();
 					} catch (FileNotFoundException e) {
 						e.printStackTrace();
 					}
