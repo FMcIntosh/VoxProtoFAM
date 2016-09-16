@@ -11,7 +11,12 @@ public class FileModel {
     static HashMap<WordFile, ArrayList<ArrayList<String>>> _fileMap = new HashMap<>();
 
     static private ArrayList<String> getLevelWords(WordFile file, int level) {
-        return _fileMap.get(file).get(level);
+        ArrayList<ArrayList<String>> fileWords = _fileMap.get(file);
+        if(level < fileWords.size()) {
+            return _fileMap.get(file).get(level - 1);
+        } else {
+            return null;
+        }
     }
     public static void initialise() {
         createFiles();
@@ -168,13 +173,17 @@ public class FileModel {
      */
     public static int countOccurencesInLevel(WordFile file, String word, int level) {
         ArrayList<String> levelWords = getLevelWords(file, level);
-        int count = 0;
-        for (String s : levelWords) {
-            if (s.equals(word)) {
-                count++;
+        if(levelWords == null) {
+            return 0;
+        } else{
+                int count = 0;
+                for (String s : levelWords) {
+                    if (s.equals(word)) {
+                        count++;
+                    }
+                }
+
+                return count;
             }
         }
-
-        return count;
-    }
 }
