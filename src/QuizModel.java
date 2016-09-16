@@ -6,11 +6,13 @@ import java.util.ArrayList;
 public class QuizModel {
 
     private int _numWordsInQuiz;
+    private int _numCorrectWords;
     private int _levelSelected;
     private ArrayList<String> _quizWords;
     private boolean _isReview;
     private int _curruntWordIndex;
     private QuizState _quizState;
+    private boolean _quizFinished;
 
     QuizModel(boolean isReview, int levelSelected) {
         _isReview = isReview;
@@ -18,7 +20,9 @@ public class QuizModel {
         _curruntWordIndex = 0;
        _quizWords = generateQuizWords();
         _numWordsInQuiz = _quizWords.size();
+        _numCorrectWords = 0;
         _quizState = QuizState.STARTED;
+        _quizFinished = (_numWordsInQuiz== _curruntWordIndex);
     }
 
     /*
@@ -65,6 +69,14 @@ public class QuizModel {
         return _quizState;
     }
 
+    public String getCurrentWord() {
+        return _quizWords.get(_curruntWordIndex);
+    }
+
+    public boolean getQuizFinished() {
+        return _quizFinished;
+    }
+
     // End of getters ------------------------------------------------------------------------------------------
 
     public void updateState(boolean isCorrectAnswer) {
@@ -85,4 +97,34 @@ public class QuizModel {
                 break;
         }
     }
+
+    // Answer submission logic ---------------------------------------------------------------------------------
+
+    public boolean submitAnswer (String answer) {
+        //Verify valid
+        if(!answer.matches("[a-zA-Z]+")){
+            return false;
+        } else {
+            //update model state by passing through the answer result (true/false)
+            updateState(checkAnswer(answer));
+            updateQuiz();
+        }
+
+        // Return a true response to the view if successful submission
+        return true;
+    }
+
+    /*
+     * Simple helper method that
+     */
+    private boolean checkAnswer(String word) {
+        return (word == getCurrentWord());
+    }
+
+
+    private void updateQuiz() {
+        _curruntWordIndex++;
+        _quizFinished = (_numWordsInQuiz== _curruntWordIndex);
+    }
+
 }
