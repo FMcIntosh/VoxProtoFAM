@@ -12,6 +12,7 @@ public class QuizModel {
     private boolean _isReview;
     private int _curruntWordIndex;
     private QuizState _quizState;
+    private WordState _wordState;
     private boolean _quizFinished;
 
     QuizModel(boolean isReview, int levelSelected) {
@@ -22,6 +23,7 @@ public class QuizModel {
         _numWordsInQuiz = _quizWords.size();
         _numCorrectWords = 0;
         _quizState = QuizState.STARTED;
+        _wordState = WordState.STARTED;
         _quizFinished = (_numWordsInQuiz== _curruntWordIndex);
     }
 
@@ -33,7 +35,7 @@ public class QuizModel {
         ArrayList<String> quizWords = new ArrayList<>();
         for(int i = 0; i < 10; i++) {
             // Get uniqueWords returns null if there are no more unique words
-            String word = FileModel.getUniqueWord(_isReview, _levelSelected);
+            String word = FileModel.getUniqueWord(_isReview, quizWords, _levelSelected);
             if(word == null) {
                 break;
             } else {
@@ -65,8 +67,12 @@ public class QuizModel {
         return _curruntWordIndex;
     }
 
-   public QuizState getQuizState() {
+    public QuizState getQuizState(){
         return _quizState;
+    }
+
+    public WordState getWordState(){
+        return _wordState;
     }
 
     public String getCurrentWord() {
@@ -79,20 +85,20 @@ public class QuizModel {
 
     // End of getters ------------------------------------------------------------------------------------------
 
-    public void updateState(boolean isCorrectAnswer) {
-        switch(_quizState) {
+    public void updateWordState(boolean isCorrectAnswer) {
+        switch(_wordState) {
             case STARTED:
                 if(isCorrectAnswer) {
-                    _quizState = QuizState.MASTERED;
+                    _wordState = WordState.MASTERED;
                 } else {
-                    _quizState = QuizState.INCORRECT;
+                    _wordState = WordState.INCORRECT;
                 }
                 break;
             case INCORRECT:
                 if(isCorrectAnswer) {
-                    _quizState = QuizState.FAULTED;
+                    _wordState = WordState.FAULTED;
                 } else {
-                    _quizState = QuizState.FAILED;
+                    _wordState = WordState.FAILED;
                 }
                 break;
         }
@@ -106,8 +112,8 @@ public class QuizModel {
             return false;
         } else {
             //update model state by passing through the answer result (true/false)
-            updateState(checkAnswer(answer));
-            updateQuiz();
+            updateWordState(checkAnswer(answer));
+            updateQuizState();
         }
 
         // Return a true response to the view if successful submission
