@@ -73,6 +73,7 @@ public class EnterWordScene {
             public void handle(ActionEvent event) {
                 //TODO
                 //Say word
+                FestivalStub.sayWord(_quizModel.getCurrentWord());
             }
         });
 
