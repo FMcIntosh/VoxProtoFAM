@@ -57,7 +57,7 @@ public class EnterWordScene {
                     //InvalidInputScene.display();
                 } else {
                     // Either display WordResultScene or QuizResultScene
-
+                    new WordResultScene().setScene();
                 }
             }
 
