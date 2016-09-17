@@ -61,9 +61,9 @@ public class WordResultScene {
                 public void handle(ActionEvent event) {
                     // Refresh word state if word is finished (if word was incorrect don't referesh
                     // as need to use it again
-//                    if(!_currentWordState.equals(WordState.INCORRECT) ){
-//                        _quizModel.nextWord();
-//                    }
+                    if(!_currentWordState.equals(WordState.INCORRECT) ){
+                        _quizModel.nextWord();
+                    }
                     new EnterWordScene().setScene();
                 }
             });

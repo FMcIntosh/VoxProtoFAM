@@ -99,7 +99,7 @@ public class QuizModel {
     public void updateQuizState() {
         // If the word is failed or mastered, it is finished so need to go to the next word
         if(!(_wordModel.getWordState().equals(WordState.INCORRECT))) {
-            nextWord();
+            addWordToFiles();
             _curruntWordIndex++;
         }
         // If we have gone through all words in the quiz, the quiz is finished
@@ -111,7 +111,7 @@ public class QuizModel {
     /*
      * Called when moving to next word.
      */
-    public void nextWord() {
+    private void addWordToFiles() {
         switch (_wordModel.getWordState()) {
             case FAULTED:
                 FileModel.addWordToLevel(WordFile.FAULTED, _wordModel.getWord(), getLevelSelected());
@@ -126,9 +126,12 @@ public class QuizModel {
         }
 
         FileModel.addUniqueWordToLevel(WordFile.ATTEMPTED, getCurrentWord(), getLevelSelected());
-        _wordModel = new WordModel(getCurrentWord());
     }
 
+
+    public void nextWord() {
+        _wordModel = new WordModel(getCurrentWord());
+    }
     // Answer submission logic ---------------------------------------------------------------------------------
 
     public boolean submitAnswer (String answer) {
