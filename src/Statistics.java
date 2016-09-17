@@ -15,6 +15,7 @@ import javafx.scene.layout.VBox;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Comparator;
 
 /**
@@ -33,21 +34,17 @@ public class Statistics {
      */
     public ObservableList<WordStatistic> getWordStatistics() {
         ObservableList<WordStatistic> statistics = FXCollections.observableArrayList();
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(WordFile.ATTEMPTED + ""));
-            String currentLine;
-            
-            //should read from file only the words between specified level and the next level
-            while((currentLine = reader.readLine()) != null) {
-                // trim newline when comparing with lineToRemove
-                String trimmedLine = currentLine.trim();
-                statistics.add(new WordStatistic(trimmedLine, _level));
-            }
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
+        // BufferedReader reader = new BufferedReader(new FileReader(WordFile.ATTEMPTED + ""));
+        ArrayList<String> levelWords = FileModel.getWordsFromLevel(WordFile.ATTEMPTED, _level);
+
+        //should read from file only the words between specified level and the next level
+        for (String word : levelWords) {
+            // trim newline when comparing with lineToRemove
+            String trimmedLine = word.trim();
+            statistics.add(new WordStatistic(trimmedLine, _level));
+        }
+        
         /*
          * Sort the statistics by most times mastered
          */
