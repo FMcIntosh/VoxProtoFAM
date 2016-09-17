@@ -8,6 +8,7 @@ import java.util.Random;
  */
 public class FileModel {
 
+    //Stores Words
     static HashMap<WordFile, ArrayList<ArrayList<String>>> _fileMap = new HashMap<>();
 
     static private ArrayList<String> getLevelWords(WordFile file, int level) {
@@ -18,6 +19,9 @@ public class FileModel {
             return null;
         }
     }
+
+    // Creates files that don't already exist and also parses files into _fileMape for
+    // easy access during application
     public static void initialise() {
         createFiles();
         parseFiles();
@@ -39,7 +43,7 @@ public class FileModel {
 
     /*
      * Helper method that parses the files and converts them into a more easily
-     * read format. Need to parse everytime application is started
+     * read format. Need to parse every time application is started
      * Coupled to format of text file
      */
     private static void parseFiles() {
@@ -99,6 +103,9 @@ public class FileModel {
     }
 
 
+    /*
+     * Get all the words in a level
+     */
     public static void getWordsFromLevel(WordFile file, int level) {
     }
 
@@ -134,6 +141,7 @@ public class FileModel {
     }
 
 
+
     public static void addUniqueWordToLevel(WordFile file, String word, int level) {
         if (!containsWordInLevel(file, word, level)) {
             addWordToLevel(file, word, level);
@@ -150,9 +158,17 @@ public class FileModel {
      */
     public static String randWordFromLevel(WordFile file, int level) {
         ArrayList<String> levelWords = getLevelWords(file, level);
-        int index =  new Random().nextInt((levelWords.size())) + 1;
-        return levelWords.get(index);
+        //check to make sure there are words
+        if(levelWords.size() >0) {
+            int index = new Random().nextInt((levelWords.size())) + 1;
+            return levelWords.get(index);
+        } else {
+            // Shouldn't get to this point as should already have picked up if file is empty
+            return "";
+        }
+
     }
+
     /*
      * returns whether a word is in a level
      */
@@ -165,7 +181,9 @@ public class FileModel {
      * Removes word from list // need to make sure it keeps files in sync
      */
     public static void removeWordFromLevel(WordFile file, String word, int level) {
-        getLevelWords(file, level).remove(word);
+        if(containsWordInLevel(file, word, level)) {
+            getLevelWords(file, level).remove(word);
+        }
     }
 
     /*
@@ -182,7 +200,6 @@ public class FileModel {
                         count++;
                     }
                 }
-
                 return count;
             }
         }
