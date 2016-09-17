@@ -22,9 +22,10 @@ public class QuizModel {
         _quizWords = generateQuizWords();
         _numWordsInQuiz = _quizWords.size();
         _numCorrectWords = 0;
-        _wordModel = new WordModel();
-        if (_numCorrectWords > 0) {
+
+        if (_numWordsInQuiz > 0) {
             _quizState = QuizState.READY;
+            _wordModel = new WordModel(getCurrentWord());
         } else _quizState = QuizState.NO_WORDS;
     }
 
@@ -97,7 +98,8 @@ public class QuizModel {
      */
     public void updateQuizState() {
         // If the word is failed or mastered, it is finished so need to go to the next word
-        if(_wordModel.getWordState() == WordState.FAILED || _wordModel.getWordState() == WordState.MASTERED) {
+        if(!(_wordModel.getWordState().equals(WordState.INCORRECT))) {
+            nextWord();
             _curruntWordIndex++;
         }
         // If we have gone through all words in the quiz, the quiz is finished
@@ -110,7 +112,21 @@ public class QuizModel {
      * Called when moving to next word.
      */
     public void nextWord() {
-        _wordModel = new WordModel();
+        switch (_wordModel.getWordState()) {
+            case FAULTED:
+                FileModel.addWordToLevel(WordFile.FAULTED, _wordModel.getWord(), getLevelSelected());
+            case FAILED:
+                FileModel.addWordToLevel(WordFile.FAILED, _wordModel.getWord(), getLevelSelected());
+                FileModel.addUniqueWordToLevel(WordFile.REVIEW, _wordModel.getWord(), getLevelSelected());
+                break;
+            case MASTERED:
+                FileModel.addWordToLevel(WordFile.MASTERED, _wordModel.getWord(), getLevelSelected());
+                break;
+            default:
+        }
+
+        FileModel.addUniqueWordToLevel(WordFile.ATTEMPTED, getCurrentWord(), getLevelSelected());
+        _wordModel = new WordModel(getCurrentWord());
     }
 
     // Answer submission logic ---------------------------------------------------------------------------------

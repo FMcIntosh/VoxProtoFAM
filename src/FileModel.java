@@ -12,11 +12,16 @@ public class FileModel {
     static HashMap<WordFile, ArrayList<ArrayList<String>>> _fileMap = new HashMap<>();
 
     static private ArrayList<String> getLevelWords(WordFile file, int level) {
-        ArrayList<ArrayList<String>> fileWords = _fileMap.get(file);
+        ArrayList<ArrayList<String>> fileWords =_fileMap.get(file);
+        // Add logic to check that the file has been made
+
+
         if(level < fileWords.size()) {
-            return _fileMap.get(file).get(level - 1);
+            return fileWords.get(level - 1);
         } else {
-            return null;
+            ArrayList<String> newList = new ArrayList<>();
+            fileWords.add(level -1, newList);
+            return fileWords.get(level - 1);
         }
     }
 

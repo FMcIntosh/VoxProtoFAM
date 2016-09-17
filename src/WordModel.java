@@ -4,14 +4,19 @@
 public class WordModel {
 
     private WordState _wordState;
+    String _word;
 
-    WordModel() {
+    WordModel(String word) {
         _wordState = WordState.STARTED;
+        _word = word;
     }
     public WordState getWordState(){
         return _wordState;
     }
 
+    public String getWord() {
+        return _word;
+    }
     public void updateWordState(boolean isCorrectAnswer) {
         switch(_wordState) {
             case STARTED:
