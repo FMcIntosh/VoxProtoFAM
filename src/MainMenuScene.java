@@ -10,8 +10,22 @@ public class MainMenuScene {
 		AppModel.getWindow().setTitle("Main Menu");
 		
 		Button quizBtn = new Button("New Quiz");
+		quizBtn.setOnAction(new EventHandler<ActionEvent>(){
+			@Override
+			public void handle(ActionEvent event) {
+				LevelSelectScene.setIsReview(false);
+				LevelSelectScene.setScene();
+			}
+		});
 		
 		Button reviewBtn = new Button("Review");
+		reviewBtn.setOnAction(new EventHandler<ActionEvent>(){
+			@Override
+			public void handle(ActionEvent event) {
+				LevelSelectScene.setIsReview(true);
+				LevelSelectScene.setScene();
+			}
+		});
 		
 		Button statsBtn = new Button("Statistics");
 		statsBtn.setOnAction(new EventHandler<ActionEvent>(){
