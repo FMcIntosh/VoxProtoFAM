@@ -115,7 +115,7 @@ public class QuizModel {
             return false;
         } else {
             //update model state by passing through the answer result (true/false)
-            _wordModel.updateWordState(answer == getCurrentWord());
+            _wordModel.updateWordState(answer.equals(getCurrentWord()));
             updateQuizState();
         }
 
