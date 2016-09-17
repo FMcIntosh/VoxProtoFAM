@@ -34,7 +34,7 @@ public class Statistics {
     public ObservableList<WordStatistic> getWordStatistics() {
         ObservableList<WordStatistic> statistics = FXCollections.observableArrayList();
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(FileModel.attemptedlist));
+            BufferedReader reader = new BufferedReader(new FileReader(WordFile.ATTEMPTED + ""));
             String currentLine;
             
             //should read from file only the words between specified level and the next level

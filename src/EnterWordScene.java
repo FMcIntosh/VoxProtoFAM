@@ -49,10 +49,18 @@ public class EnterWordScene {
             @Override
             public void handle(ActionEvent event) {
                 //TODO
-               // Check Answer;
-                // Update model state
+                // submit answer which  returns false if word is invalid
+                boolean validWord = _quizModel.submitAnswer(input.getText());
                 // Build appropriate scene depending on model state
+                if (!validWord) {
+                    // Would like it to be a pop up, so might need a new method for this in AppModel
+                    //InvalidInputScene.display();
+                } else {
+                    // Either display WordResultScene or QuizResultScene
+
+                }
             }
+
         });
 
         /*
@@ -99,7 +107,7 @@ public class EnterWordScene {
         outerLayout.setAlignment(Pos.CENTER);
 
         // create new scene using outerLayour
-        return new Scene(outerLayout, AppModel.getAppWidth(), AppModel.getAppHeight());
+        return new Scene(outerLayout, AppModel.getWidth(), AppModel.getHeight());
     }
 
     public void setScene() {

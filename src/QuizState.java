@@ -1,6 +1,6 @@
 /**
- * Created by Fraser McIntosh on 13/09/2016.
+ * Created by Fraser McIntosh on 16/09/2016.
  */
 public enum QuizState {
-    STARTED, INCORRECT, FAULTED, FAILED, MASTERED;
+    READY, NO_WORDS, STARTED, FINISHED
 }

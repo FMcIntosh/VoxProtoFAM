@@ -28,6 +28,8 @@ public class AppModel extends Application{
 	 * These values will persist even if the application is closed.
 	 */
 	private static void setup(){
+		//Initialise files
+		FileModel.initialise();
 		try{
 			BufferedReader reader = new BufferedReader(new FileReader(".settings.txt"));
 			_isFirstTime = Boolean.parseBoolean(reader.readLine());

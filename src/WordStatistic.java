@@ -15,9 +15,9 @@ public class WordStatistic {
      */
     WordStatistic(String word, int level) {
         this.word = new SimpleStringProperty(word);
-        faulted = new SimpleIntegerProperty(FileModel.countOccurences(FileModel.faulted_stats, word, level));
-        failed = new SimpleIntegerProperty(FileModel.countOccurences(FileModel.failed_stats, word, level));
-        mastered = new SimpleIntegerProperty(FileModel.countOccurences(FileModel.mastered_stats, word, level));
+        faulted = new SimpleIntegerProperty(FileModel.countOccurencesInLevel(WordFile.FAULTED, word, level));
+        failed = new SimpleIntegerProperty(FileModel.countOccurencesInLevel(WordFile.FAILED, word, level));
+        mastered = new SimpleIntegerProperty(FileModel.countOccurencesInLevel(WordFile.MASTERED, word, level));
     }
 
     public String getWord() {
