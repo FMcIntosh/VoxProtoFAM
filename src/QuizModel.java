@@ -99,12 +99,18 @@ public class QuizModel {
         // If the word is failed or mastered, it is finished so need to go to the next word
         if(_wordModel.getWordState() == WordState.FAILED || _wordModel.getWordState() == WordState.MASTERED) {
             _curruntWordIndex++;
-            _wordModel = new WordModel();
         }
         // If we have gone through all words in the quiz, the quiz is finished
         if(_numWordsInQuiz == _curruntWordIndex){
             _quizState = QuizState.FINISHED;
         }
+    }
+
+    /*
+     * Called when moving to next word.
+     */
+    public void nextWord() {
+        _wordModel = new WordModel();
     }
 
     // Answer submission logic ---------------------------------------------------------------------------------
