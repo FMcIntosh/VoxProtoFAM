@@ -70,7 +70,7 @@ public class WordResultScene {
         layout.getChildren().addAll(label1, actionButton);
         layout.setAlignment(Pos.CENTER);
 
-        return new Scene(layout);
+        return new Scene(layout, AppModel.getWidth(), AppModel.getHeight());
     }
 
     public void setScene() {
