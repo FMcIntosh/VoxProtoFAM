@@ -5,6 +5,9 @@ public class WordModel {
 
     private WordState _wordState;
 
+    WordModel() {
+        _wordState = WordState.STARTED;
+    }
     public WordState getWordState(){
         return _wordState;
     }
