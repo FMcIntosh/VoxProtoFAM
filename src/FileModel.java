@@ -198,7 +198,7 @@ public class FileModel {
         ArrayList<String> levelWords = getLevelWords(file, level);
         //check to make sure there are words
         if(levelWords.size() >0) {
-            int index = new Random().nextInt((levelWords.size())) + 1;
+            int index = new Random().nextInt((levelWords.size()));
             return levelWords.get(index);
         } else {
             // Shouldn't get to this point as should already have picked up if file is empty
