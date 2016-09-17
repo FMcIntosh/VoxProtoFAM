@@ -52,6 +52,8 @@ public class FileModel {
      * Coupled to format of text file
      */
     private static void parseFiles() {
+
+
         //Loop through every file
         for (WordFile filename : WordFile.values()) {
             File file = new File(filename + "");
@@ -88,7 +90,8 @@ public class FileModel {
     // Sync files with file map incase words have been added
     // that are not on file
     public static void SyncFile(WordFile filename) {
-
+//clear every file
+        clearFiles();
         //Loop through every file
             File file = new File(filename + "");
         PrintWriter output;
@@ -145,13 +148,12 @@ public class FileModel {
     /*
      * Get all the words in a level
      */
-    public static void getWordsFromLevel(WordFile file, int level) {
-    }
+
 
     /*
      * Helper method that returns all words from a level in a file selected
      */
-    private static ArrayList<String> wordsFromLevel(WordFile file, int level) {
+    public static ArrayList<String> getWordsFromLevel(WordFile file, int level) {
 
         BufferedReader in = null;
         ArrayList<String> words = new ArrayList<>();
