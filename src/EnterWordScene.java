@@ -33,7 +33,7 @@ public class EnterWordScene {
         }
 
         // Label that displays what number word it is, eg Word 5 of 10
-        Label wordCountLabel = new Label("Enter Word " + (_quizModel.getCurruntWordIndex() + 2) + " of " + _quizModel.getNumWordsInQuiz());
+        Label wordCountLabel = new Label("Enter Word " + (_quizModel.getCurruntWordIndex() + 1) + " of " + _quizModel.getNumWordsInQuiz());
 
         //Text input where user will enter word
         TextField input = new TextField();
@@ -75,9 +75,9 @@ public class EnterWordScene {
                 //Say word
             }
         });
+
         //Layout
         HBox innerLayout = new HBox();
-
         if (_isReview) {
         /*
          * Button that causes festival to spell out the current word
@@ -93,8 +93,8 @@ public class EnterWordScene {
 
             // add this button to the inner layout
             innerLayout.getChildren().addAll(spellButton);
-
         }
+
         // add components to inner layout
         innerLayout.getChildren().addAll(sayButton, input, submitButton);
 
@@ -117,6 +117,5 @@ public class EnterWordScene {
         //Set scene in AppModel
         AppModel.setScene(EnterWordScene);
     }
-
 
 }
