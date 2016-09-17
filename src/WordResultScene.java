@@ -25,7 +25,7 @@ public class WordResultScene {
 
         //Label informing the user if the answered correctly or not
         Label label1 = new Label();
-        if(_currentWordState.equals(WordState.MASTERED) || _currentWordState.equals(WordState.FAULTED)) {
+        if (_currentWordState.equals(WordState.MASTERED) || _currentWordState.equals(WordState.FAULTED)) {
             label1.setText("Correct");
         } else {
             label1.setText("Incorrect");
@@ -34,33 +34,48 @@ public class WordResultScene {
         // Button that either says "Next Word", or "Try Again", depending
         // on whether the previous answer was correct or not
         Button actionButton = new Button();
-        if(_currentWordState.equals(WordState.INCORRECT)) {
-            actionButton.setText("Try Again");
-        } else {
-            actionButton.setText("Next Word");
-        }
-
         /*
-         * Either way, this button will take the user back to the 'Enter Word' Scene
+         * If quiz is finished take us to the finished quiz scene
          */
-        actionButton.setOnAction(new EventHandler<ActionEvent>() {
+        if (_quizModel.getQuizState() == QuizState.FINISHED) {
+
+            actionButton.setText("Finish Quiz");
+            actionButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                  //  new QuizFinished().setScene();
+                }
+            });
+
+        } else {
+
+            if (_currentWordState.equals(WordState.INCORRECT)) {
+                actionButton.setText("Try Again");
+            } else {
+                actionButton.setText("Next Word");
+            }
+
+             // Either way, this button will take the user back to the 'Enter Word' Scene
+            actionButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
                     new EnterWordScene().setScene();
                 }
             });
-        //Layout
-        VBox layout4 = new VBox(10);
-        layout4.getChildren().addAll(label1, actionButton);
-        layout4.setAlignment(Pos.CENTER);
 
-        return new Scene(layout4);
+        }
+
+        //Layout
+        VBox layout = new VBox(10);
+        layout.getChildren().addAll(label1, actionButton);
+        layout.setAlignment(Pos.CENTER);
+
+        return new Scene(layout);
     }
 
     public void setScene() {
         Scene WordResultScene = build();
         AppModel.setScene(WordResultScene);
     }
-
 
 }
