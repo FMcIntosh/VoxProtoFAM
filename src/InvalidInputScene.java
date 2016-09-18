@@ -18,7 +18,7 @@ public class InvalidInputScene {
 
     public static Scene build() {
         //Clear history, maybe could be in a better place in terms of responsibilities
-        final Stage _window = new Stage();
+         _window = new Stage();
 
         //Block user interaction with other windows until this window is
         // dealt with
