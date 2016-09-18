@@ -44,7 +44,7 @@ public class Statistics {
             String trimmedLine = word.trim();
             statistics.add(new WordStatistic(trimmedLine, _level));
         }
-        
+
         /*
          * Sort the statistics by most times mastered
          */

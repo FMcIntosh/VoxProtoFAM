@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Created by Fraser McIntosh on 13/09/2016.
@@ -35,19 +36,27 @@ public class QuizModel {
      */
     private ArrayList<String> generateQuizWords() {
         ArrayList<String> quizWords = new ArrayList<>();
-        for(int i = 0; i < 10; i++) {
+        WordFile file = WordFile.SPELLING_LIST;
+        if(_isReview) {
+            file = WordFile.REVIEW;
+        }
+        ArrayList<String> wordsFromList= FileModel.getWordsFromLevel(file, getLevelSelected());
+        int numWordsInQuiz = 10;
+        if(wordsFromList.size() < 10) {
+            numWordsInQuiz = wordsFromList.size();
+        }
+        for(int i = 0; i < numWordsInQuiz; i++) {
             // Decide what file to take from
-            WordFile file = WordFile.SPELLING_LIST;
-            if(_isReview) {
-                file = WordFile.REVIEW;
-            }
+
             // Take a random word
-            String word = FileModel.randWordFromLevel(file, _levelSelected);
-            if(word == null) {
-                break;
-            } else {
-                quizWords.add(word);
+            int index = new Random().nextInt((wordsFromList.size()));
+            String word = wordsFromList.get(index);
+            while(quizWords.contains(word)) {
+                 index = new Random().nextInt((wordsFromList.size()));
+                word = wordsFromList.get(index);
+
             }
+            quizWords.add(word);
         }
         return quizWords;
     }

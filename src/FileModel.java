@@ -17,7 +17,9 @@ public class FileModel {
         if(fileWords.containsKey(level)) {
             return fileWords.get(level);
         } else {
-            return null;
+            ArrayList<String> emptyList = new ArrayList<>();
+            fileWords.put(level, emptyList);
+            return getLevelWords(file, level);
         }
     }
 
@@ -76,11 +78,13 @@ public class FileModel {
                         currentLine = in.readLine();
                     }
 
-                    // next level's words
-                    level++;
 
                     // add levels to construct file
                     fileWords.put(level, levelWords);
+                    // next level's words
+                    level++;
+
+
                 }
 
             } catch (IOException e) {
@@ -90,6 +94,7 @@ public class FileModel {
             _fileMap.put(filename, fileWords);
         }
     }
+
 
     // Sync files with file map incase words have been added
     // that are not on file
@@ -103,15 +108,14 @@ public class FileModel {
         try {
             // make writer
             output = new PrintWriter(new FileWriter(file, true));
-            int level = 0;
             HashMap<Integer, ArrayList<String>> fileWords =  _fileMap.get(filename);
 
             //loop through every file
-            for(int i = 0; i < fileWords.size(); i++){
-                ArrayList<String> levelWords = fileWords.get(i);
+            for(int level = 1; level <= fileWords.size(); level++){
+                ArrayList<String> levelWords = fileWords.get(level);
 
                 //write out level header
-                output.println("%Level " + (i + 1));
+                output.println("%Level " + (level));
 
                 //write each word
                 for(String word : levelWords) {
@@ -135,7 +139,7 @@ public class FileModel {
         for (WordFile filename : WordFile.values()) {
             // Don't want to clear the spelling list
             if(filename.equals(WordFile.SPELLING_LIST)) {
-                break;
+                continue;
             }
             File f = new File(filename + "");
             if (f.isFile()) {
@@ -163,32 +167,34 @@ public class FileModel {
      */
     public static ArrayList<String> getWordsFromLevel(WordFile file, int level) {
 
-        BufferedReader in = null;
-        ArrayList<String> words = new ArrayList<>();
+//        BufferedReader in = null;
+//        ArrayList<String> words = new ArrayList<>();
+//
+//        try {
+//            in = new BufferedReader(new FileReader(file + ""));
+//
+//            String currentLine = in.readLine();
+//            String toFind = "%Level " + level;
+//            /*
+//             * Find level indicator in file
+//             */
+//            while (currentLine != toFind && currentLine != null) {
+//                currentLine = in.readLine();
+//            }
+//
+//            toFind = "%Level " + (level + 1);
+//            while (currentLine != toFind && currentLine != null) {
+//                words.add(currentLine);
+//                currentLine = in.readLine();
+//            }
+//            // add all words after this
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return words;
 
-        try {
-            in = new BufferedReader(new FileReader(file + ""));
-
-            String currentLine = in.readLine();
-            String toFind = "%Level " + level;
-            /*
-             * Find level indicator in file
-             */
-            while (currentLine != toFind && currentLine != null) {
-                currentLine = in.readLine();
-            }
-
-            toFind = "%Level " + (level + 1);
-            while (currentLine != toFind && currentLine != null) {
-                words.add(currentLine);
-                currentLine = in.readLine();
-            }
-            // add all words after this
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return words;
+        return _fileMap.get(file).get(level);
     }
 
 
