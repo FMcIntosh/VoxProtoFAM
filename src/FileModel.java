@@ -9,19 +9,15 @@ import java.util.Random;
 public class FileModel {
 
     //Stores Words
-    static HashMap<WordFile, ArrayList<ArrayList<String>>> _fileMap = new HashMap<>();
+    static HashMap<WordFile, HashMap<Integer, ArrayList<String>>> _fileMap = new HashMap<>();
 
     static private ArrayList<String> getLevelWords(WordFile file, int level) {
-        ArrayList<ArrayList<String>> fileWords =_fileMap.get(file);
+        HashMap<Integer, ArrayList<String>> fileWords =_fileMap.get(file);
         // Add logic to check that the file has been made
-
-
-        if(level < fileWords.size()) {
-            return fileWords.get(level - 1);
+        if(fileWords.containsKey(level)) {
+            return fileWords.get(level);
         } else {
-            ArrayList<String> newList = new ArrayList<>();
-            fileWords.add(level -1, newList);
-            return fileWords.get(level - 1);
+            return null;
         }
     }
 
@@ -52,31 +48,39 @@ public class FileModel {
      * Coupled to format of text file
      */
     private static void parseFiles() {
-
-
         //Loop through every file
         for (WordFile filename : WordFile.values()) {
             File file = new File(filename + "");
             BufferedReader in = null;
             // file de-constructed into lists of levels
-            ArrayList<ArrayList<String>> fileWords = new ArrayList<>();
+            HashMap<Integer, ArrayList<String>> fileWords = new HashMap<>();
             try {
                 in = new BufferedReader(new FileReader(file + ""));
 
                 String currentLine = in.readLine();
 
                 // loop through till end of file
+
+                // to keep track of the right level
+                int level = 1;
                 while (currentLine != null) {
                     currentLine = in.readLine();
 
+
+
                     // construct levels between each $Level, relying on indexing to store lists in right location
-                    ArrayList<String> level = new ArrayList<>();
+                    ArrayList<String> levelWords = new ArrayList<>();
                     while (currentLine != null && currentLine.charAt(0) != '%') {
-                        level.add(currentLine);
+                        System.out.println(currentLine);
+                        levelWords.add(currentLine);
                         currentLine = in.readLine();
                     }
+
+                    // next level's words
+                    level++;
+
                     // add levels to construct file
-                    fileWords.add(level);
+                    fileWords.put(level, levelWords);
                 }
 
             } catch (IOException e) {
@@ -90,17 +94,17 @@ public class FileModel {
     // Sync files with file map incase words have been added
     // that are not on file
     public static void SyncFile(WordFile filename) {
-//clear every file
+       //clear every file
         clearFiles();
         //Loop through every file
-            File file = new File(filename + "");
+        File file = new File(filename + "");
         PrintWriter output;
 
         try {
             // make writer
             output = new PrintWriter(new FileWriter(file, true));
             int level = 0;
-            ArrayList<ArrayList<String>> fileWords = _fileMap.get(filename);
+            HashMap<Integer, ArrayList<String>> fileWords =  _fileMap.get(filename);
 
             //loop through every file
             for(int i = 0; i < fileWords.size(); i++){
@@ -129,6 +133,10 @@ public class FileModel {
     public static void clearFiles() {
         // Loop through each file and if it exists clear it
         for (WordFile filename : WordFile.values()) {
+            // Don't want to clear the spelling list
+            if(filename.equals(WordFile.SPELLING_LIST)) {
+                break;
+            }
             File f = new File(filename + "");
             if (f.isFile()) {
                 PrintWriter writer = null;
