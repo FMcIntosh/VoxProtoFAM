@@ -100,7 +100,7 @@ public class FileModel {
     // that are not on file
     public static void SyncFile(WordFile filename) {
        //clear every file
-        clearFiles();
+        clearFile(filename);
         //Loop through every file
         File file = new File(filename + "");
         PrintWriter output;
@@ -131,6 +131,20 @@ public class FileModel {
 
 
     }
+    public static void clearFile(WordFile filename) {
+        File f = new File(filename + "");
+        if (f.isFile()) {
+            PrintWriter writer = null;
+            try {
+                writer = new PrintWriter(f);
+                // writer.print("");
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } finally {
+                writer.close();
+            }
+        }
+    }
     /*
      * Clear all data from files
      */
@@ -141,18 +155,7 @@ public class FileModel {
             if(filename.equals(WordFile.SPELLING_LIST)) {
                 continue;
             }
-            File f = new File(filename + "");
-            if (f.isFile()) {
-                PrintWriter writer = null;
-                try {
-                    writer = new PrintWriter(f);
-                    // writer.print("");
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } finally {
-                    writer.close();
-                }
-            }
+            clearFile(filename);
         }
     }
 
@@ -194,7 +197,7 @@ public class FileModel {
 //        }
 //        return words;
 
-        return _fileMap.get(file).get(level);
+        return getLevelWords(file, level);
     }
 
 
