@@ -80,8 +80,9 @@ public class AppModel extends Application{
 		_voice = voice;
 		updateTxtFile();
 	}
-	public static void setQuizModel(boolean isReview, int levelSelected){
+	public static QuizState setQuizModel(boolean isReview, int levelSelected){
 		_quizModel = new QuizModel(isReview, levelSelected);
+		return _quizModel.start();
 	}
 	//to be invoked from start() method that starts the GUI
 	public static void setWindow(Stage window){

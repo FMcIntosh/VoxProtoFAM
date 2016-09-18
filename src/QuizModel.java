@@ -19,6 +19,9 @@ public class QuizModel {
     QuizModel(boolean isReview, int levelSelected) {
         _isReview = isReview;
         _levelSelected = levelSelected;
+    }
+
+    public QuizState start() {
         _curruntWordIndex = 0;
         _quizWords = generateQuizWords();
         _numWordsInQuiz = _quizWords.size();
@@ -28,6 +31,7 @@ public class QuizModel {
             _quizState = QuizState.READY;
             _wordModel = new WordModel(getCurrentWord());
         } else _quizState = QuizState.NO_WORDS;
+        return _quizState;
     }
 
     /*
@@ -69,10 +73,6 @@ public class QuizModel {
 
     public int getLevelSelected() {
         return _levelSelected;
-    }
-
-    public ArrayList<String> getQuizWords() {
-        return _quizWords;
     }
 
     public WordState getWordState() {
@@ -126,10 +126,13 @@ public class QuizModel {
                 FileModel.addWordToLevel(WordFile.FAULTED, _wordModel.getWord(), getLevelSelected());
             case FAILED:
                 FileModel.addWordToLevel(WordFile.FAILED, _wordModel.getWord(), getLevelSelected());
+                // Add both faulted and failed words to review list
                 FileModel.addUniqueWordToLevel(WordFile.REVIEW, _wordModel.getWord(), getLevelSelected());
                 break;
             case MASTERED:
+                // if mastered add to mastered list and remove from review list
                 FileModel.addWordToLevel(WordFile.MASTERED, _wordModel.getWord(), getLevelSelected());
+                FileModel.removeWordFromLevel(WordFile.REVIEW, _wordModel.getWord(), getLevelSelected());
                 break;
             default:
         }
@@ -152,7 +155,6 @@ public class QuizModel {
             _wordModel.updateWordState(answer.equals(getCurrentWord()));
             updateQuizState();
         }
-
         // Return a true response to the view if successful submission
         return true;
     }

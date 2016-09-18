@@ -54,7 +54,7 @@ public class EnterWordScene {
                 // Build appropriate scene depending on model state
                 if (!validWord) {
                     // Would like it to be a pop up, so might need a new method for this in AppModel
-                    //InvalidInputScene.display();
+                    InvalidInputScene.setScene();
                 } else {
                     // Either display WordResultScene or QuizResultScene
                     new WordResultScene().setScene();
@@ -89,6 +89,7 @@ public class EnterWordScene {
                 public void handle(ActionEvent event) {
                     //TODO
                     //Spell out word
+                    FestivalStub.spellWord(_quizModel.getCurrentWord());
                 }
             });
 

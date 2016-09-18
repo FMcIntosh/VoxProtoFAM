@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
+
 
 /**
  * Created by Fraser McIntosh on 16/09/2016.
@@ -53,7 +53,7 @@ public class FileModel {
         //Loop through every file
         for (WordFile filename : WordFile.values()) {
             File file = new File(filename + "");
-            BufferedReader in = null;
+            BufferedReader in;
             // file de-constructed into lists of levels
             HashMap<Integer, ArrayList<String>> fileWords = new HashMap<>();
             try {
@@ -145,6 +145,7 @@ public class FileModel {
             }
         }
     }
+
     /*
      * Clear all data from files
      */
@@ -169,34 +170,6 @@ public class FileModel {
      * Helper method that returns all words from a level in a file selected
      */
     public static ArrayList<String> getWordsFromLevel(WordFile file, int level) {
-
-//        BufferedReader in = null;
-//        ArrayList<String> words = new ArrayList<>();
-//
-//        try {
-//            in = new BufferedReader(new FileReader(file + ""));
-//
-//            String currentLine = in.readLine();
-//            String toFind = "%Level " + level;
-//            /*
-//             * Find level indicator in file
-//             */
-//            while (currentLine != toFind && currentLine != null) {
-//                currentLine = in.readLine();
-//            }
-//
-//            toFind = "%Level " + (level + 1);
-//            while (currentLine != toFind && currentLine != null) {
-//                words.add(currentLine);
-//                currentLine = in.readLine();
-//            }
-//            // add all words after this
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return words;
-
         return getLevelWords(file, level);
     }
 
@@ -212,22 +185,6 @@ public class FileModel {
     public static void addWordToLevel(WordFile file, String word, int level) {
         getLevelWords(file, level).add(word);
         SyncFile(file);
-    }
-
-
-    /*
-     * Returns a random word from a level in a given file
-     */
-    public static String randWordFromLevel(WordFile file, int level) {
-        ArrayList<String> levelWords = getLevelWords(file, level);
-        //check to make sure there are words
-        if(levelWords.size() >0) {
-            int index = new Random().nextInt((levelWords.size()));
-            return levelWords.get(index);
-        } else {
-            // Shouldn't get to this point as should already have picked up if file is empty
-            return "";
-        }
     }
 
     /*

@@ -50,11 +50,15 @@ public class LevelSelectScene {
 					int level = Integer.parseInt(str);
 
 					//Initialises new quiz model object with the selected level
-					AppModel.setQuizModel(_isReview, level);
+					QuizState quizState = AppModel.setQuizModel(_isReview, level);
 
 					//Initialises new EnterWordScene scene to be built next
-					EnterWordScene wordScene = new EnterWordScene();
-					wordScene.setScene();
+					if(quizState.equals(QuizState.READY)) {
+						EnterWordScene wordScene = new EnterWordScene();
+						wordScene.setScene();
+					} else if (quizState.equals(QuizState.NO_WORDS)){
+
+					}
 				}
 			});
 
