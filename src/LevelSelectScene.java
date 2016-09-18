@@ -39,7 +39,7 @@ public class LevelSelectScene {
 		//Generates each of the 10 buttons, one by one
 		for(int i = 1; i < 11; i++){
 			//Sets the text of button
-			Button levelBtn = new Button("Level "+i);
+			final Button levelBtn = new Button("Level "+i);
 
 			//Generates event for the current button
 			levelBtn.setOnAction(new EventHandler<ActionEvent>(){
