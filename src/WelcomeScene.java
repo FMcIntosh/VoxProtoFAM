@@ -20,7 +20,7 @@ public class WelcomeScene{
 
 		//create drop down box containing all available levels
 		final ComboBox<String> comboBox = new ComboBox<String>();
-		for (int i = 1; i< 11;i++){
+		for (int i = 1; i<= AppModel.getNumLevels();i++){
 			comboBox.getItems().add("Level "+i);
 		}
 

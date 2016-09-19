@@ -25,7 +25,7 @@ public class StatisticsScene {
         BorderPane borderPane = new BorderPane();
         
         //Create table layout for each level, in each of their own separate tabs
-        for (int i = 1; i <= 10; i++) {
+        for (int i = 1; i <= AppModel.getNumLevels(); i++) {
         	//Create tab for level based on the current iteration number of for loop
             Tab tab = new Tab();
             tab.setText("Level " + i);
