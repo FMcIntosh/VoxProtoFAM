@@ -36,7 +36,7 @@ public class EnterWordScene {
         Label wordCountLabel = new Label("Enter Word " + (_quizModel.getCurruntWordIndex() + 1) + " of " + _quizModel.getNumWordsInQuiz());
 
         //Text input where user will enter word
-        TextField input = new TextField();
+        final TextField input = new TextField();
         input.setPromptText("Spell word here");
 
         /*
