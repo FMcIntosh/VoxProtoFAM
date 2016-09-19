@@ -74,8 +74,17 @@ public class LevelSelectScene {
 		//Centers button layout
 		buttonLayout.setAlignment(Pos.CENTER);
 
+		//Create button to return user to main menu
+        Button returnBtn = new Button("Return to Main Menu");
+        returnBtn.setOnAction(new EventHandler<ActionEvent>(){
+			@Override
+			public void handle(ActionEvent arg0) {
+				MainMenuScene.setScene();
+			}
+        });
+        
 		//Adds all components to root layout and returns the scene containing the layout
-		root.getChildren().addAll(titleLbl, promptLbl,buttonLayout);
+		root.getChildren().addAll(titleLbl, promptLbl,buttonLayout, returnBtn);
 		return(new Scene(root,AppModel.getWidth(),AppModel.getHeight()));
 	}
 
