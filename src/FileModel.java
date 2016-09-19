@@ -44,6 +44,34 @@ public class FileModel {
         }
     }
 
+    public static int calcNumLevels() {
+        File file = new File(WordFile.SPELLING_LIST + "");
+        BufferedReader in;
+        int level = 0;
+        try {
+            in = new BufferedReader(new FileReader(file + ""));
+
+            String currentLine = in.readLine();
+
+            // loop through till end of file
+
+            // to keep track of the right level
+
+            while (currentLine != null) {
+                if(currentLine.split("")[0].equals("%")){
+                    level++;
+                }
+                currentLine = in.readLine();
+            }
+        }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+           return level;
+
+    }
+
+
     /*
      * Helper method that parses the files and converts them into a more easily
      * read format. Need to parse every time application is started
@@ -73,7 +101,6 @@ public class FileModel {
                     // construct levels between each $Level, relying on indexing to store lists in right location
                     ArrayList<String> levelWords = new ArrayList<>();
                     while (currentLine != null && currentLine.charAt(0) != '%') {
-                        System.out.println(currentLine);
                         levelWords.add(currentLine);
                         currentLine = in.readLine();
                     }
@@ -111,15 +138,18 @@ public class FileModel {
             HashMap<Integer, ArrayList<String>> fileWords =  _fileMap.get(filename);
 
             //loop through every file
-            for(int level = 1; level <= fileWords.size(); level++){
-                ArrayList<String> levelWords = fileWords.get(level);
-
+            for(int level = 1; level <= AppModel.getLevels(); level++){
                 //write out level header
                 output.println("%Level " + (level));
 
-                //write each word
-                for(String word : levelWords) {
-                    output.println(word);
+                // if level exists
+                if(fileWords.containsKey(level)) {
+                    ArrayList<String> levelWords = fileWords.get(level);
+
+                    //write each word
+                    for (String word : levelWords) {
+                        output.println(word);
+                    }
                 }
 
             }

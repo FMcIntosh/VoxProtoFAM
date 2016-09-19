@@ -22,6 +22,7 @@ public class AppModel extends Application{
 	private final static int DEFAULT_WIDTH = 500;
 	private final static int DEFAULT_HEIGHT = 500;
 
+	private static int _numLevels = 11;
 
 	/*
 	 * Reads in the 3 settings values from .settings.txt file. 
@@ -30,6 +31,7 @@ public class AppModel extends Application{
 	private static void setup(){
 		//Initialise files
 		FileModel.initialise();
+		setNumLevels(FileModel.calcNumLevels());
 		try{
 			BufferedReader reader = new BufferedReader(new FileReader(".settings.txt"));
 			_isFirstTime = Boolean.parseBoolean(reader.readLine());
@@ -66,6 +68,9 @@ public class AppModel extends Application{
 	public static int getHeight(){
 		return DEFAULT_HEIGHT;
 	}
+	public static int getNumLevels(){
+		return _numLevels;
+	}
 
 	//Setter methods
 	public static void setLevelsUnlocked(int value) throws FileNotFoundException{
@@ -97,6 +102,10 @@ public class AppModel extends Application{
 		_levelsUnlocked = 0;
 		_voice = "default";
 		updateTxtFile();
+	}
+
+	public static void setNumLevels(int numLevels) {
+		_numLevels = numLevels;
 	}
 	
 	//Overwrites .settings.txt file with updated field values 
