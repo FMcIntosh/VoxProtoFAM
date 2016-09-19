@@ -6,6 +6,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
+import java.io.FileNotFoundException;
+
 /**
  * Created by Fraser McIntosh on 14/09/2016.
  */
@@ -43,6 +45,12 @@ public class WordResultScene {
             actionButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
+                    // Update number of levels unlocked
+                    if(_quizModel.getNumCorrectWords() >= 9){
+                        try {
+                            AppModel.setLevelsUnlocked(AppModel.getLevelsUnlocked() + 1);
+                        } catch (FileNotFoundException e ){}
+                    }
                   //  new QuizFinished().setScene();
                 }
             });
