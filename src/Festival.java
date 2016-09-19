@@ -7,7 +7,6 @@ import java.io.Writer;
 
 public class Festival {
 	
-	//Not sure what the difference in these two methods is?
 	
 	//Says aloud the given word
 	public static void sayWord(String word) throws IOException, InterruptedException{
