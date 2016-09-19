@@ -33,11 +33,11 @@ public class LevelSelectScene {
 		VBox root = new VBox(30);
 		root.setAlignment(Pos.CENTER);
 
-		//Layout for the 10 buttons
+		//Layout for the 11 buttons
 		VBox buttonLayout = new VBox();
 
-		//Generates each of the 10 buttons, one by one
-		for(int i = 1; i < 11; i++){
+		//Generates a level button for each level, one by one
+		for(int i = 1; i <= AppModel.getNumLevels(); i++){
 			//Sets the text of button
 			final Button levelBtn = new Button("Level "+i);
 
