@@ -138,7 +138,7 @@ public class FileModel {
             HashMap<Integer, ArrayList<String>> fileWords =  _fileMap.get(filename);
 
             //loop through every file
-            for(int level = 1; level <= AppModel.getLevels(); level++){
+            for(int level = 1; level <= AppModel.getNumLevels(); level++){
                 //write out level header
                 output.println("%Level " + (level));
 

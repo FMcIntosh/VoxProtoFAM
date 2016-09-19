@@ -90,6 +90,10 @@ public class QuizModel {
     public QuizState getQuizState(){
         return _quizState;
     }
+    public int getNumCorrectWords() {
+        return _numCorrectWords;
+    }
+
 
 
 
@@ -110,6 +114,9 @@ public class QuizModel {
         if(!(_wordModel.getWordState().equals(WordState.INCORRECT))) {
             addWordToFiles();
             _curruntWordIndex++;
+            if(!_wordModel.getWordState().equals(WordState.FAILED)) {
+                _numCorrectWords++;
+            }
         }
         // If we have gone through all words in the quiz, the quiz is finished
         if(_numWordsInQuiz == _curruntWordIndex){

@@ -48,19 +48,7 @@ public class LevelSelectScene {
 					//Gets the level that the button corresponds to
 					String str = levelBtn.getText().replaceAll("\\D+","");
 					int level = Integer.parseInt(str);
-
-					//Initialises new quiz model object with the selected level
-					QuizState quizState = AppModel.setQuizModel(_isReview, level);
-
-					//If Quiz is ready
-					// Initialises new EnterWordScene scene to be built next
-					if(quizState.equals(QuizState.READY)) {
-						EnterWordScene wordScene = new EnterWordScene();
-						wordScene.setScene();
-						// Else if no words display no words scene
-					} else if (quizState.equals(QuizState.NO_WORDS)){
-						NoWordsScene.setScene();
-					}
+					AppModel.startQuiz(_isReview, level);
 				}
 			});
 
