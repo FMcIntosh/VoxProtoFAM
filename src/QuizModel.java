@@ -1,3 +1,6 @@
+import org.omg.PortableInterceptor.SUCCESSFUL;
+
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -14,6 +17,8 @@ public class QuizModel {
     private int _curruntWordIndex;
     private QuizState _quizState;
     private WordModel _wordModel;
+    private static final int MAX_QUIZ_WORDS = 1;
+    private static final int PASS_LEVEL_SCORE = 1;
 
 
     QuizModel(boolean isReview, int levelSelected) {
@@ -45,8 +50,8 @@ public class QuizModel {
             file = WordFile.REVIEW;
         }
         ArrayList<String> wordsFromList= FileModel.getWordsFromLevel(file, getLevelSelected());
-        int numWordsInQuiz = 10;
-        if(wordsFromList.size() < 10) {
+        int numWordsInQuiz = MAX_QUIZ_WORDS;
+        if(wordsFromList.size() < MAX_QUIZ_WORDS) {
             numWordsInQuiz = wordsFromList.size();
         }
         for(int i = 0; i < numWordsInQuiz; i++) {
@@ -70,32 +75,24 @@ public class QuizModel {
     public int getNumWordsInQuiz() {
         return _numWordsInQuiz;
     }
-
     public int getLevelSelected() {
         return _levelSelected;
     }
-
     public WordState getWordState() {
         return _wordModel.getWordState();
     }
-
     public boolean getIsReview() {
         return _isReview;
     }
-
     public int getCurruntWordIndex() {
         return _curruntWordIndex;
     }
-
     public QuizState getQuizState(){
         return _quizState;
     }
     public int getNumCorrectWords() {
         return _numCorrectWords;
     }
-
-
-
 
     public String getCurrentWord() {
         return _quizWords.get(_curruntWordIndex);
@@ -119,8 +116,19 @@ public class QuizModel {
             }
         }
         // If we have gone through all words in the quiz, the quiz is finished
+
         if(_numWordsInQuiz == _curruntWordIndex){
             _quizState = QuizState.FINISHED;
+            if(getNumCorrectWords() >= PASS_LEVEL_SCORE){
+                try {
+                    // If current level is highest unlocked level
+                    // And not the highest level possible
+                    if(getLevelSelected() == AppModel.getLevelsUnlocked() && AppModel.getLevelsUnlocked() < AppModel.getNumLevels()) {
+                        // unlock the next level
+                        AppModel.setLevelsUnlocked(AppModel.getLevelsUnlocked() + 1);
+                    }
+                } catch (FileNotFoundException e ){}
+            }
         }
     }
 
