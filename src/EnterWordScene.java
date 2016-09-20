@@ -32,10 +32,13 @@ public class EnterWordScene {
         if(_isReview) {
             label1.setText("Review Quiz");
         }
-
         label1.setTranslateY(-100);
-        label1.setFont(Font.font ("Verdana", 20));
+        label1.setFont(Font.font ("Verdana", 30));
+
+
         Label currentScoreLabel = new Label("Current score: " + _quizModel.getNumCorrectWords() + " out of "+ _quizModel.getCurruntWordIndex());
+        currentScoreLabel.setTranslateY(-50);
+        currentScoreLabel.setFont(Font.font ("Verdana", 20));
         // Label that displays what number word it is, eg Word 5 of 10
         Label wordCountLabel = new Label("Enter Word " + (_quizModel.getCurruntWordIndex() + 1) + " of " + _quizModel.getNumWordsInQuiz());
 
