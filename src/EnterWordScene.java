@@ -32,6 +32,7 @@ public class EnterWordScene {
             label1.setText("Review Quiz");
         }
 
+        Label currentScoreLabel = new Label("Current score: " + _quizModel.getNumCorrectWords() + " out of "+ _quizModel.getCurruntWordIndex());
         // Label that displays what number word it is, eg Word 5 of 10
         Label wordCountLabel = new Label("Enter Word " + (_quizModel.getCurruntWordIndex() + 1) + " of " + _quizModel.getNumWordsInQuiz());
 
@@ -105,7 +106,7 @@ public class EnterWordScene {
         outerLayout.setPadding(new Insets(30, 0, 0, 0));
 
         // add the inner componenets to the outer layout
-        outerLayout.getChildren().addAll(label1, wordCountLabel, innerLayout);
+        outerLayout.getChildren().addAll(label1,currentScoreLabel, wordCountLabel, innerLayout);
         outerLayout.setAlignment(Pos.CENTER);
 
         // create new scene using outerLayour
