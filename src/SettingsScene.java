@@ -70,6 +70,7 @@ public class SettingsScene {
 					/*
 					 * TODO clear history of words and statistics
 					 */
+					FileModel.clearFiles();
 
 					WelcomeScene.setScene();
 				} catch (Exception e) {

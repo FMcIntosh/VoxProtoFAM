@@ -162,17 +162,11 @@ public class FileModel {
 
     }
     public static void clearFile(WordFile filename) {
-        File f = new File(filename + "");
-        if (f.isFile()) {
-            PrintWriter writer = null;
-            try {
-                writer = new PrintWriter(f);
-                // writer.print("");
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } finally {
-                writer.close();
-            }
+        HashMap<Integer, ArrayList<String>> fileWords =  _fileMap.get(filename);
+        for(int level = 1; level <= AppModel.getNumLevels(); level++){
+            ArrayList<String> levelWords =  new ArrayList<>();
+            fileWords.put(level, levelWords);
+            _fileMap.put(filename, fileWords);
         }
     }
 
@@ -186,7 +180,9 @@ public class FileModel {
             if(filename.equals(WordFile.SPELLING_LIST)) {
                 continue;
             }
+            // Clear the file then sync it
             clearFile(filename);
+            SyncFile(filename);
         }
     }
 
