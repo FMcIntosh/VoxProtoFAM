@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.MediaPlayer;
 
 /**
  * Created by Fraser McIntosh on 19/09/2016.
@@ -33,6 +34,14 @@ public class QuizFinishedScene {
         } else {
             outcomeLabel.setText("Hard Luck!");
         }
+
+        Button playVideoButton = new Button("Play reward Video");
+        playVideoButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                MediaPlayerScene.setScene();
+            }
+        });
 
         // Let user know their score
         Label label = new Label("You got " + _quizModel.getNumCorrectWords() +" out of " + _quizModel.getNumWordsInQuiz());
@@ -89,9 +98,10 @@ public class QuizFinishedScene {
 
         //Layout
         VBox layout = new VBox(10);
-        if(_quizModel.getIsHardestLevel()) {
+        // If they just unlocked a level
+        if(_quizModel.getIsHardestLevel() && _quizModel.getSuccessfulQuiz()) {
             Label levelUnlockedLabel = new Label("You have unlocked level: "+ AppModel.getLevelsUnlocked());
-            layout.getChildren().addAll(outcomeLabel, label, levelUnlockedLabel, innerLayout, returnBtn);
+            layout.getChildren().addAll(outcomeLabel, label, levelUnlockedLabel, playVideoButton, innerLayout, returnBtn);
         } else {
             layout.getChildren().addAll(outcomeLabel, label, innerLayout, returnBtn);
         }
