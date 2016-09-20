@@ -26,6 +26,15 @@ public class QuizFinishedScene {
     private Scene build() {
 
         //Label informing the user if the answered correctly or not
+        Label outcomeLabel = new Label();
+
+        if(_quizModel.getSuccessfulQuiz()) {
+            outcomeLabel.setText("Well Done!");
+        } else {
+            outcomeLabel.setText("Hard Luck!");
+        }
+
+        // Let user know their score
         Label label = new Label("You got " + _quizModel.getNumCorrectWords() +" out of " + _quizModel.getNumWordsInQuiz());
 
         // Button that either says "Next Word", or "Try Again", depending
@@ -59,8 +68,8 @@ public class QuizFinishedScene {
 
         // add components to inner layout
 
-        //If final level, we don't want a next level button
-        if(_quizModel.getLevelSelected() == AppModel.getNumLevels()) {
+        //If final level, or didn't pass we don't want a next level button
+        if(_quizModel.getLevelSelected() == AppModel.getNumLevels() || !_quizModel.getSuccessfulQuiz()) {
             innerLayout.getChildren().addAll(levelSelectButton, retryLevelButton);
         } else {
             innerLayout.getChildren().addAll(levelSelectButton, retryLevelButton, nextLevelButton);
@@ -71,7 +80,12 @@ public class QuizFinishedScene {
         outerLayout.setPadding(new Insets(30, 0, 0, 0));
         //Layout
         VBox layout = new VBox(10);
-        layout.getChildren().addAll(label, innerLayout);
+        if(_quizModel.getIsHardestLevel()) {
+            Label levelUnlockedLabel = new Label("You have unlocked level: "+ AppModel.getLevelsUnlocked());
+            layout.getChildren().addAll(outcomeLabel, label, levelUnlockedLabel, innerLayout);
+        } else {
+            layout.getChildren().addAll(outcomeLabel, label, innerLayout);
+        }
         layout.setAlignment(Pos.CENTER);
 
         return new Scene(layout, AppModel.getWidth(), AppModel.getHeight());

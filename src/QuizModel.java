@@ -19,11 +19,18 @@ public class QuizModel {
     private WordModel _wordModel;
     private static final int MAX_QUIZ_WORDS = 1;
     private static final int PASS_LEVEL_SCORE = 1;
+    private boolean _successfulQuiz = false;
+    private boolean _isHardestLevel;
 
 
     QuizModel(boolean isReview, int levelSelected) {
         _isReview = isReview;
         _levelSelected = levelSelected;
+        if(getLevelSelected() == AppModel.getLevelsUnlocked() && AppModel.getLevelsUnlocked() < AppModel.getNumLevels()) {
+            _isHardestLevel = true;
+        } else {
+            _isHardestLevel = false;
+        }
     }
 
     public QuizState start() {
@@ -93,11 +100,15 @@ public class QuizModel {
     public int getNumCorrectWords() {
         return _numCorrectWords;
     }
-
+    public boolean getSuccessfulQuiz() {
+        return _successfulQuiz;
+    }
     public String getCurrentWord() {
         return _quizWords.get(_curruntWordIndex);
     }
-
+    public boolean getIsHardestLevel() {
+        return _isHardestLevel;
+    }
 
     // End of getters ------------------------------------------------------------------------------------------
 
@@ -120,10 +131,11 @@ public class QuizModel {
         if(_numWordsInQuiz == _curruntWordIndex){
             _quizState = QuizState.FINISHED;
             if(getNumCorrectWords() >= PASS_LEVEL_SCORE){
+                _successfulQuiz = true;
                 try {
                     // If current level is highest unlocked level
                     // And not the highest level possible
-                    if(getLevelSelected() == AppModel.getLevelsUnlocked() && AppModel.getLevelsUnlocked() < AppModel.getNumLevels()) {
+                    if(_isHardestLevel) {
                         // unlock the next level
                         AppModel.setLevelsUnlocked(AppModel.getLevelsUnlocked() + 1);
                     }

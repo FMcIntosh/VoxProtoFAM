@@ -1,9 +1,37 @@
 %Level 1
+I
+and
+we
+a
+to
+was
+my
+the
+it
+in
 %Level 2
 so
 he
+me
+there
+she
+you
+at
+up
+for
+went
+is
+got
+when
 %Level 3
+down
+not
 %Level 4
+very
+can
+an
+do
+from
 %Level 5
 %Level 6
 %Level 7
@@ -13,3 +41,15 @@ he
 representative
 beautiful
 %Level 11
+existence
+surround
+immediately
+application
+extraordinary
+surgery
+guitar
+reign
+cultural
+experiment
+poverty
+physical
