@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
 /**
  * Created by Fraser McIntosh on 14/09/2016.
@@ -32,6 +33,8 @@ public class EnterWordScene {
             label1.setText("Review Quiz");
         }
 
+        label1.setTranslateY(-100);
+        label1.setFont(Font.font ("Verdana", 20));
         Label currentScoreLabel = new Label("Current score: " + _quizModel.getNumCorrectWords() + " out of "+ _quizModel.getCurruntWordIndex());
         // Label that displays what number word it is, eg Word 5 of 10
         Label wordCountLabel = new Label("Enter Word " + (_quizModel.getCurruntWordIndex() + 1) + " of " + _quizModel.getNumWordsInQuiz());
@@ -39,7 +42,6 @@ public class EnterWordScene {
         //Text input where user will enter word
         final TextField input = new TextField();
         input.setPromptText("Spell word here");
-
         /*
          * Button that is responsible for submitting a word. This involves checking
          * whether the word is spelt correctly or not and asking the model to
