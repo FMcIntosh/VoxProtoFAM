@@ -46,12 +46,7 @@ public class WordResultScene {
                 @Override
                 public void handle(ActionEvent event) {
                     // Update number of levels unlocked
-                    if(_quizModel.getNumCorrectWords() >= 9){
-                        try {
-                            AppModel.setLevelsUnlocked(AppModel.getLevelsUnlocked() + 1);
-                        } catch (FileNotFoundException e ){}
-                    }
-                  //  new QuizFinished().setScene();
+                     new QuizFinishedScene().setScene();
                 }
             });
 
