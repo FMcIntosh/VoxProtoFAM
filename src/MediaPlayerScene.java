@@ -15,6 +15,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 
 import java.io.File;
@@ -26,6 +27,7 @@ import java.net.URI;
 public class MediaPlayerScene {
 
     public static void setScene(){
+        final Stage window = new Stage();
         Group root = new Group();
         URI path = new File("big_buck_bunny_1_minute.mp4").toURI();
         Media media = new Media(path.toString());
@@ -40,6 +42,15 @@ public class MediaPlayerScene {
         sliderBox.getChildren().add(slider);
 
 
+
+        //-------------Buttons-----------------------------------------------
+        Button close= new Button("Close");
+        close.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                closeVideo(player, window);
+            }
+        });
 
         Button stop= new Button("Stop");
         stop.setOnAction(new EventHandler<ActionEvent>() {
@@ -64,18 +75,23 @@ public class MediaPlayerScene {
                 player.play();
             }
         });
+        //--------------------------------------------------------------------------
 
         controlLayout.setAlignment(Pos.CENTER);
-        controlLayout.getChildren().addAll(stop, pause, play);
+        controlLayout.getChildren().addAll(close,stop, pause, play);
         controlLayout.setTranslateY(330);
         controls.getChildren().addAll(sliderBox, controlLayout);
         root.getChildren().addAll(view,controls);
 
 
+        // Change default close behaviour
+        window.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                closeVideo(player, window);
+            }
+        });
 
-
-
-        final Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         Scene mediaScene = new Scene(root, AppModel.getWidth(), AppModel.getHeight());
         window.setScene(mediaScene);
@@ -112,5 +128,11 @@ public class MediaPlayerScene {
                 player.seek((Duration.seconds(slider.getValue())));
             }
         });
+    }
+
+    // Method to close player properly and then close the window
+    private static void closeVideo(MediaPlayer player, Stage window){
+        player.stop();
+        window.close();
     }
 }
