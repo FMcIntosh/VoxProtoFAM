@@ -1,10 +1,12 @@
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 public class LevelSelectScene {
@@ -34,8 +36,11 @@ public class LevelSelectScene {
 		root.setAlignment(Pos.CENTER);
 
 		//Layout for the 11 buttons
-		VBox buttonLayout = new VBox();
-
+		GridPane buttonLayout = new GridPane();
+		buttonLayout.setPadding(new Insets(10,10,10,10));
+		buttonLayout.setVgap(8);
+		buttonLayout.setHgap(10);
+		int j = 0;
 		//Generates a level button for each level, one by one
 		for(int i = 1; i <= AppModel.getNumLevels(); i++){
 			//Sets the text of button
@@ -57,7 +62,9 @@ public class LevelSelectScene {
 				levelBtn.setDisable(true);
 			}
 			//Adds button to the button layout
+			GridPane.setConstraints(levelBtn, ((i -1)%3), j);
 			buttonLayout.getChildren().add(levelBtn);
+			j = i /3;
 		}
 		//Centers button layout
 		buttonLayout.setAlignment(Pos.CENTER);
