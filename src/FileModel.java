@@ -161,13 +161,29 @@ public class FileModel {
 
 
     }
-    public static void clearFile(WordFile filename) {
+    public static void clearList(WordFile filename) {
         HashMap<Integer, ArrayList<String>> fileWords =  _fileMap.get(filename);
         for(int level = 1; level <= AppModel.getNumLevels(); level++){
             ArrayList<String> levelWords =  new ArrayList<>();
             fileWords.put(level, levelWords);
             _fileMap.put(filename, fileWords);
         }
+    }
+
+    public static void clearFile(WordFile filename) {
+        File f = new File(filename + "");
+        if (f.isFile()) {
+            PrintWriter writer = null;
+            try {
+                writer = new PrintWriter(f);
+                // writer.print("");
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } finally {
+                writer.close();
+            }
+        }
+
     }
 
     /*
@@ -181,6 +197,7 @@ public class FileModel {
                 continue;
             }
             // Clear the file then sync it
+            clearList(filename);
             clearFile(filename);
             SyncFile(filename);
         }
