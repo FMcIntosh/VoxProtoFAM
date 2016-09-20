@@ -74,17 +74,26 @@ public class QuizFinishedScene {
         } else {
             innerLayout.getChildren().addAll(levelSelectButton, retryLevelButton, nextLevelButton);
         }
-
         innerLayout.setAlignment(Pos.CENTER);
         VBox outerLayout = new VBox(10);
         outerLayout.setPadding(new Insets(30, 0, 0, 0));
+
+        // Goes in outer layout
+        Button returnBtn = new Button("Return to Main Menu");
+        returnBtn.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent arg0) {
+                MainMenuScene.setScene();
+            }
+        });
+
         //Layout
         VBox layout = new VBox(10);
         if(_quizModel.getIsHardestLevel()) {
             Label levelUnlockedLabel = new Label("You have unlocked level: "+ AppModel.getLevelsUnlocked());
-            layout.getChildren().addAll(outcomeLabel, label, levelUnlockedLabel, innerLayout);
+            layout.getChildren().addAll(outcomeLabel, label, levelUnlockedLabel, innerLayout, returnBtn);
         } else {
-            layout.getChildren().addAll(outcomeLabel, label, innerLayout);
+            layout.getChildren().addAll(outcomeLabel, label, innerLayout, returnBtn);
         }
         layout.setAlignment(Pos.CENTER);
 
