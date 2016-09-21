@@ -1,4 +1,5 @@
-import javafx.application.Application;
+package app.scene;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -12,23 +13,23 @@ import javafx.stage.Stage;
 /**
  * Created by Fraser McIntosh on 18/09/2016.
  */
-public class InvalidInputScene {
+public class NoWordsScene {
 
     static Stage _window;
 
     public static Scene build() {
         //Clear history, maybe could be in a better place in terms of responsibilities
-         _window = new Stage();
+        _window = new Stage();
 
         //Block user interaction with other windows until this window is
         // dealt with
         _window.initModality(Modality.APPLICATION_MODAL);
-        _window.setTitle("Invalid Input");
+        _window.setTitle("No Words");
         _window.setMinWidth(300);
 
         //Components
         Label label = new Label();
-        label.setText("Please enter valid input. Alphabetical characters only");
+        label.setText("There are no words to test in this level");
         Button closeButton = new Button("OK");
         closeButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override

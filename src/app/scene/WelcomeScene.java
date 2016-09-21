@@ -1,5 +1,8 @@
+package app.scene;
+
 import java.io.FileNotFoundException;
 
+import app.AppModel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -14,13 +17,13 @@ public class WelcomeScene{
 	private static Scene build() throws Exception {
 		AppModel.getWindow().setTitle("Welcome");
 
-		//Create scene labels
+		//Create app.scene labels
 		Label welcomeLbl = new Label("Welcome to VoxSpell");
 		Label selectLbl = new Label("To get started, please select your desired starting level");
 
 		//create drop down box containing all available levels
 		final ComboBox<String> comboBox = new ComboBox<String>();
-		for (int i = 1; i<= AppModel.getNumLevels();i++){
+		for (int i = 1; i<= AppModel.getNumLevels(); i++){
 			comboBox.getItems().add("Level "+i);
 		}
 
@@ -53,7 +56,7 @@ public class WelcomeScene{
 		layout1.setAlignment(Pos.CENTER);
 		layout1.getChildren().addAll(welcomeLbl, selectLbl, comboBox, selectBtn);
 
-		return(new Scene(layout1,AppModel.getWidth(),AppModel.getHeight()));
+		return(new Scene(layout1, AppModel.getWidth(), AppModel.getHeight()));
 	}
 	
 	public static void setScene() throws Exception{
@@ -66,7 +69,7 @@ public class WelcomeScene{
 		String str = levelString.replaceAll("\\D+","");
 		int selectedLevel = Integer.parseInt(str);
 		
-		//Update AppModel with new level-unlocked value
+		//Update app.AppModel with new level-unlocked value
 		AppModel.setLevelsUnlocked(selectedLevel);
 	}
 

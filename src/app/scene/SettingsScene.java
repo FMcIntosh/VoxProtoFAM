@@ -1,5 +1,9 @@
+package app.scene;
+
 import java.io.FileNotFoundException;
 
+import app.AppModel;
+import app.model.FileModel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -17,7 +21,7 @@ public class SettingsScene {
 		Label selectVoiceLbl= new Label("Select Voice to read out Quiz Words");
 
 
-		//Create two radio buttons for switching between Festival voices
+		//Create two radio buttons for switching between app.process.Festival voices
 		RadioButton defaultBtn = new RadioButton("Default Voice");
 		RadioButton nzBtn = new RadioButton("New Zealand Voice");
 
@@ -60,7 +64,7 @@ public class SettingsScene {
 		//Button to clear all data from application, as if starting from new
 		Button resetBtn = new Button("Reset Data");
 
-		//Button resets appModel data, resets word statistics and builds the welcome scene again
+		//Button resets appModel data, resets word statistics and builds the welcome app.scene again
 		resetBtn.setOnAction(new EventHandler<ActionEvent>(){
 			@Override
 			public void handle(ActionEvent arg0) {
@@ -93,7 +97,7 @@ public class SettingsScene {
 		layout1.setAlignment(Pos.CENTER);
 		layout1.getChildren().addAll(selectVoiceLbl, defaultBtn, nzBtn, resetBtn, returnBtn);
 
-		return(new Scene(layout1,AppModel.getWidth(),AppModel.getHeight()));
+		return(new Scene(layout1, AppModel.getWidth(), AppModel.getHeight()));
 
 	}
 	public static void setScene(){

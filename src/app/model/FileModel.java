@@ -1,3 +1,7 @@
+package app.model;
+
+import app.AppModel;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,3 +1,5 @@
+package app;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -7,6 +9,13 @@ import java.io.PrintWriter;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import app.model.FileModel;
+import app.model.QuizModel;
+import app.model.QuizState;
+import app.scene.EnterWordScene;
+import app.scene.MainMenuScene;
+import app.scene.NoWordsScene;
+import app.scene.WelcomeScene;
 
 
 public class AppModel extends Application{
@@ -132,15 +141,15 @@ public class AppModel extends Application{
 	}
 
 	public static void startQuiz( boolean isReview, int level) {
-		//Initialises new quiz model object with the selected level
+		//Initialises new quiz app.model object with the selected level
 		QuizState quizState = AppModel.setQuizModel(isReview,level);
 
 		//If Quiz is ready
-		// Initialises new EnterWordScene scene to be built next
+		// Initialises new app.scene.EnterWordScene app.scene to be built next
 		if(quizState.equals(QuizState.READY)) {
 			EnterWordScene wordScene = new EnterWordScene();
 			wordScene.setScene();
-			// Else if no words display no words scene
+			// Else if no words display no words app.scene
 		} else if (quizState.equals(QuizState.NO_WORDS)){
 			NoWordsScene.setScene();
 		}

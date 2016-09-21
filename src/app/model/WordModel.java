@@ -1,3 +1,5 @@
+package app.model;
+
 /**
  * Created by Fraser McIntosh on 16/09/2016.
  */

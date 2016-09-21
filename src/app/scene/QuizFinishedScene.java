@@ -1,3 +1,8 @@
+package app.scene;
+
+import app.AppModel;
+import app.model.QuizModel;
+import app.model.WordState;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -7,7 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.media.MediaPlayer;
 
 /**
  * Created by Fraser McIntosh on 19/09/2016.
@@ -23,7 +27,7 @@ public class QuizFinishedScene {
         _currentWordState = _quizModel.getWordState();
     }
 
-    // Only get to this scene if quiz still going, so don't need to check that (or do we??)
+    // Only get to this app.scene if quiz still going, so don't need to check that (or do we??)
     private Scene build() {
 
         //Label informing the user if the answered correctly or not

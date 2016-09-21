@@ -1,3 +1,6 @@
+package app.scene;
+
+import app.AppModel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -5,7 +8,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
@@ -31,7 +33,7 @@ public class LevelSelectScene {
 		//Details instructions for user
 		Label promptLbl = new Label("Please select the level of the test words");
 
-		//Create overarching layout for this scene and centers it
+		//Create overarching layout for this app.scene and centers it
 		VBox root = new VBox(30);
 		root.setAlignment(Pos.CENTER);
 
@@ -78,12 +80,12 @@ public class LevelSelectScene {
 			}
         });
         
-		//Adds all components to root layout and returns the scene containing the layout
+		//Adds all components to root layout and returns the app.scene containing the layout
 		root.getChildren().addAll(titleLbl, promptLbl,buttonLayout, returnBtn);
-		return(new Scene(root,AppModel.getWidth(),AppModel.getHeight()));
+		return(new Scene(root, AppModel.getWidth(), AppModel.getHeight()));
 	}
 
-	//Sets the scene of the window as the Level Select Scene
+	//Sets the app.scene of the window as the Level Select Scene
 	public static void setScene(){
 		Scene lvlSelectScene = build();
 		AppModel.setScene(lvlSelectScene);

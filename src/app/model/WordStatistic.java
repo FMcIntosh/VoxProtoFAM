@@ -1,5 +1,9 @@
+package app.model;
+
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import app.model.FileModel;
+import app.model.WordFile;
 
 /**
  * Created by Fraser McIntosh on 20/08/2016.

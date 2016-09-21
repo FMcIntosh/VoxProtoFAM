@@ -1,4 +1,8 @@
-import javafx.application.Application;
+package app.scene;
+
+import app.AppModel;
+import app.model.QuizModel;
+import app.process.FestivalStub;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -18,13 +22,13 @@ public class EnterWordScene {
     private QuizModel _quizModel;
     private boolean _isReview;
 
-    EnterWordScene() {
+    public EnterWordScene() {
         _quizModel = AppModel.getQuizModel();
         _isReview = _quizModel.getIsReview();
     }
 
     /*
-     * Build the components of the Enter Word scene, and return a scene object
+     * Build the components of the Enter Word app.scene, and return a app.scene object
      */
     private Scene build() {
 
@@ -47,7 +51,7 @@ public class EnterWordScene {
         input.setPromptText("Spell word here");
         /*
          * Button that is responsible for submitting a word. This involves checking
-         * whether the word is spelt correctly or not and asking the model to
+         * whether the word is spelt correctly or not and asking the app.model to
          * update itself based on this result
          */
         Button submitButton = new Button("Submit");
@@ -57,12 +61,12 @@ public class EnterWordScene {
                 //TODO
                 // submit answer which  returns false if word is invalid
                 boolean validWord = _quizModel.submitAnswer(input.getText());
-                // Build appropriate scene depending on model state
+                // Build appropriate app.scene depending on app.model state
                 if (!validWord) {
-                    // Would like it to be a pop up, so might need a new method for this in AppModel
+                    // Would like it to be a pop up, so might need a new method for this in app.AppModel
                     InvalidInputScene.setScene();
                 } else {
-                    // Either display WordResultScene or QuizResultScene
+                    // Either display app.scene.WordResultScene or QuizResultScene
                     new WordResultScene().setScene();
                 }
             }
@@ -114,15 +118,15 @@ public class EnterWordScene {
         outerLayout.getChildren().addAll(label1,currentScoreLabel, wordCountLabel, innerLayout);
         outerLayout.setAlignment(Pos.CENTER);
 
-        // create new scene using outerLayour
+        // create new app.scene using outerLayour
         return new Scene(outerLayout, AppModel.getWidth(), AppModel.getHeight());
     }
 
     public void setScene() {
-        //Build scene
+        //Build app.scene
         Scene EnterWordScene = build();
 
-        //Set scene in AppModel
+        //Set app.scene in app.AppModel
         AppModel.setScene(EnterWordScene);
     }
 

@@ -1,3 +1,6 @@
+package app.scene;
+
+import app.AppModel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -50,7 +53,7 @@ public class MainMenuScene {
 		layout1.setAlignment(Pos.CENTER);
 		layout1.getChildren().addAll(quizBtn, reviewBtn, statsBtn, settingsBtn);
 
-		return(new Scene(layout1,AppModel.getWidth(),AppModel.getHeight()));
+		return(new Scene(layout1, AppModel.getWidth(), AppModel.getHeight()));
 		
 	}
 	

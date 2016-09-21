@@ -1,10 +1,8 @@
+package app.model;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -12,9 +10,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -35,7 +30,7 @@ public class Statistics {
     public ObservableList<WordStatistic> getWordStatistics() {
         ObservableList<WordStatistic> statistics = FXCollections.observableArrayList();
 
-        // BufferedReader reader = new BufferedReader(new FileReader(WordFile.ATTEMPTED + ""));
+        // BufferedReader reader = new BufferedReader(new FileReader(app.model.WordFile.ATTEMPTED + ""));
         ArrayList<String> levelWords = FileModel.getWordsFromLevel(WordFile.ATTEMPTED, _level);
 
         //should read from file only the words between specified level and the next level

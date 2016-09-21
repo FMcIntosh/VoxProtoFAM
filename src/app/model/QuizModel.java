@@ -1,8 +1,11 @@
-import org.omg.PortableInterceptor.SUCCESSFUL;
+package app.model;
+
+import app.AppModel;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Random;
+
 
 /**
  * Created by Fraser McIntosh on 13/09/2016.
@@ -23,7 +26,7 @@ public class QuizModel {
     private boolean _isHardestLevel;
 
 
-    QuizModel(boolean isReview, int levelSelected) {
+    public QuizModel(boolean isReview, int levelSelected) {
         _isReview = isReview;
         _levelSelected = levelSelected;
         if(getLevelSelected() == AppModel.getLevelsUnlocked() && AppModel.getLevelsUnlocked() < AppModel.getNumLevels()) {
@@ -47,7 +50,7 @@ public class QuizModel {
     }
 
     /*
-     * Helper method for constructor that generates the words for a quiz, utilisting FileModel's
+     * Helper method for constructor that generates the words for a quiz, utilisting app.model.FileModel's
      * methods for getting words.
      */
     private ArrayList<String> generateQuizWords() {
@@ -178,7 +181,7 @@ public class QuizModel {
         if(!answer.matches("[a-zA-Z]+")){
             return false;
         } else {
-            //update model state by passing through the answer result (true/false)
+            //update app.model state by passing through the answer result (true/false)
             _wordModel.updateWordState(answer.equals(getCurrentWord()));
             updateQuizState();
         }
