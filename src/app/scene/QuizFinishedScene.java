@@ -43,7 +43,8 @@ public class QuizFinishedScene {
         playVideoButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                MediaPlayerScene.setScene();
+//                MediaPlayerScene.setScene();
+                new VLCJMediaPlayerScene().play();
             }
         });
 
