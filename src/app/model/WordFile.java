@@ -5,12 +5,13 @@ package app.model;
  */
 public enum WordFile {
 
+
     SPELLING_LIST("NZCER-spelling-lists.txt"),
-    FAULTED(".faulted_stats.txt"),
-    FAILED(".failed_stats.txt"),
-    MASTERED(".mastered_stats.txt"),
-    REVIEW(".reviewlist.txt"),
-    ATTEMPTED(".attempted.txt");
+    FAULTED(".app_files/.faulted_stats.txt"),
+    FAILED(".app_files/.failed_stats.txt"),
+    MASTERED(".app_files/.mastered_stats.txt"),
+    REVIEW(".app_files/.reviewlist.txt"),
+    ATTEMPTED(".app_files/.attempted.txt");
 
     String _filename;
     private WordFile(String filename) {

@@ -42,7 +42,7 @@ public class AppModel extends Application{
 		FileModel.initialise();
 		setNumLevels(FileModel.calcNumLevels());
 		try{
-			BufferedReader reader = new BufferedReader(new FileReader(".settings.txt"));
+			BufferedReader reader = new BufferedReader(new FileReader(".app_files/.settings.txt"));
 			_isFirstTime = Boolean.parseBoolean(reader.readLine());
 			_levelsUnlocked = Integer.parseInt(reader.readLine());
 			_voice = reader.readLine();
