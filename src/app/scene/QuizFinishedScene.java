@@ -43,13 +43,13 @@ public class QuizFinishedScene {
         playVideoButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-//                MediaPlayerScene.setScene();
-                new VLCJMediaPlayerScene().play();
+                MediaPlayerScene.setScene();
+//                new VLCJMediaPlayerScene().play();
             }
         });
 
         // Let user know their score
-        Label label = new Label("You got " + _quizModel.getNumCorrectWords() +" out of " + _quizModel.getNumWordsInQuiz());
+        Label scoreLabel = new Label("You got " + _quizModel.getNumCorrectWords() +" out of " + _quizModel.getNumWordsInQuiz());
 
         // Button that either says "Next Word", or "Try Again", depending
         // on whether the previous answer was correct or not
@@ -103,13 +103,24 @@ public class QuizFinishedScene {
 
         //Layout
         VBox layout = new VBox(10);
+        layout.getChildren().addAll(outcomeLabel, scoreLabel);
         // If they just unlocked a level
-        if(_quizModel.getIsHardestLevel() && _quizModel.getSuccessfulQuiz()) {
-            Label levelUnlockedLabel = new Label("You have unlocked level: "+ AppModel.getLevelsUnlocked());
-            layout.getChildren().addAll(outcomeLabel, label, levelUnlockedLabel, playVideoButton, innerLayout, returnBtn);
-        } else {
-            layout.getChildren().addAll(outcomeLabel, label, innerLayout, returnBtn);
-        }
+        if(_quizModel.getSuccessfulQuiz()) {
+        	
+        	// If unlocked level
+        	if(_quizModel.getIsHardestLevel()) {
+        		Label levelUnlockedLabel = new Label();
+        		levelUnlockedLabel.setText("You have unlocked level: "+ AppModel.getLevelsUnlocked());
+        		//If highest level change text
+        	    if (_quizModel.getLevelSelected() == AppModel.getNumLevels()){
+        	    	levelUnlockedLabel.setText("All levels unlocked!");
+        	    }
+        	    
+        	    layout.getChildren().addAll(levelUnlockedLabel);
+        	}
+            layout.getChildren().addAll(playVideoButton);
+        } 
+        layout.getChildren().addAll(innerLayout, returnBtn);
         layout.setAlignment(Pos.CENTER);
 
         return new Scene(layout, AppModel.getWidth(), AppModel.getHeight());

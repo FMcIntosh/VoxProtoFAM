@@ -32,7 +32,7 @@ public class MediaPlayerScene {
     public static void setScene(){
         final Stage window = new Stage();
         Group root = new Group();
-        URI path = new File("big_buck_bunny_1_minute.mp4").toURI();
+        URI path = new File("media/hey.mp4").toURI();
         Media media = new Media(path.toString());
         final MediaPlayer player = new MediaPlayer(media);
         MediaView view = new MediaView(player);

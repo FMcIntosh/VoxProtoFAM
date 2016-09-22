@@ -62,7 +62,7 @@ public class FileModel {
             // to keep track of the right level
 
             while (currentLine != null) {
-                if(currentLine.split("")[0].equals("%")){
+                if(currentLine.contains("%")){
                     level++;
                 }
                 currentLine = in.readLine();
