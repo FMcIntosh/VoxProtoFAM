@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
 /**
  * Created by Fraser McIntosh on 19/09/2016.
@@ -32,7 +33,7 @@ public class QuizFinishedScene {
 
         //Label informing the user if the answered correctly or not
         Label outcomeLabel = new Label();
-
+        outcomeLabel.setFont(Font.font ("Verdana", 30));
         if(_quizModel.getSuccessfulQuiz()) {
             outcomeLabel.setText("Well Done!");
         } else {

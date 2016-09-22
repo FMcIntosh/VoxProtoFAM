@@ -20,8 +20,8 @@ public class QuizModel {
     private int _curruntWordIndex;
     private QuizState _quizState;
     private WordModel _wordModel;
-    private static final int MAX_QUIZ_WORDS = 1;
-    private static final int PASS_LEVEL_SCORE = 1;
+    private static final int MAX_QUIZ_WORDS = 10;
+    private static final int PASS_LEVEL_SCORE = 9;
     private boolean _successfulQuiz = false;
     private boolean _isHardestLevel;
 
@@ -182,7 +182,7 @@ public class QuizModel {
             return false;
         } else {
             //update app.model state by passing through the answer result (true/false)
-            _wordModel.updateWordState(answer.equals(getCurrentWord()));
+            _wordModel.updateWordState(answer.toLowerCase().equals(getCurrentWord().toLowerCase()));
             updateQuizState();
         }
         // Return a true response to the view if successful submission

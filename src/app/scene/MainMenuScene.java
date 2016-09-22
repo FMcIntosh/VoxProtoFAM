@@ -11,6 +11,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 public class MainMenuScene {
+	private final static int BTN_WIDTH=200;
+	private final static int BTN_HEIGHT=40;
+
 	private static Scene build(){
 		AppModel.getWindow().setTitle("Main Menu");
 		Label title = new Label("Welcome to VoxSpell!");
@@ -18,8 +21,8 @@ public class MainMenuScene {
 		title.setTranslateY(-40);
 		
 		Button quizBtn = new Button("New Quiz");
-		quizBtn.setMinWidth(200);
-		quizBtn.setMinHeight(40);
+		quizBtn.setMinWidth(BTN_WIDTH);
+		quizBtn.setMinHeight(BTN_HEIGHT);
 		quizBtn.setOnAction(new EventHandler<ActionEvent>(){
 			@Override
 			public void handle(ActionEvent event) {
@@ -29,6 +32,8 @@ public class MainMenuScene {
 		});
 		
 		Button reviewBtn = new Button("Review");
+		reviewBtn.setMinWidth(BTN_WIDTH);
+		reviewBtn.setMinHeight(BTN_HEIGHT);
 		reviewBtn.setOnAction(new EventHandler<ActionEvent>(){
 			@Override
 			public void handle(ActionEvent event) {
@@ -38,6 +43,8 @@ public class MainMenuScene {
 		});
 		
 		Button statsBtn = new Button("Statistics");
+		statsBtn.setMinWidth(BTN_WIDTH);
+		statsBtn.setMinHeight(BTN_HEIGHT);
 		statsBtn.setOnAction(new EventHandler<ActionEvent>(){
 
 			@Override
@@ -48,6 +55,8 @@ public class MainMenuScene {
 		});
 		
 		Button settingsBtn = new Button("Settings");
+		settingsBtn.setMinWidth(BTN_WIDTH);
+		settingsBtn.setMinHeight(BTN_HEIGHT);
 		settingsBtn.setOnAction(new EventHandler<ActionEvent>(){
 
 			@Override

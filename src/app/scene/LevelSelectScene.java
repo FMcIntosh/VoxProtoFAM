@@ -3,16 +3,15 @@ package app.scene;
 import app.AppModel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
 public class LevelSelectScene {
-
 
 	private static boolean _isReview;
 
@@ -29,6 +28,7 @@ public class LevelSelectScene {
 		}else{
 			titleLbl.setText("New Quiz");
 		}
+		titleLbl.setFont(Font.font ("Verdana", 30));
 
 		//Details instructions for user
 		Label promptLbl = new Label("Please select the level of the test words");
@@ -39,9 +39,9 @@ public class LevelSelectScene {
 
 		//Layout for the 11 buttons
 		GridPane buttonLayout = new GridPane();
-		buttonLayout.setPadding(new Insets(10,10,10,10));
-		buttonLayout.setVgap(8);
-		buttonLayout.setHgap(10);
+//		buttonLayout.setPadding(new Insets(10,10,10,10));
+//		buttonLayout.setVgap(8);
+//		buttonLayout.setHgap(10);
 		int j = 0;
 		//Generates a level button for each level, one by one
 		for(int i = 1; i <= AppModel.getNumLevels(); i++){
